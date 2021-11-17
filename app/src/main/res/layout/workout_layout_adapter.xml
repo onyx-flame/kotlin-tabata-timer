@@ -1,69 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/backgroundWhite"
-    android:orientation="vertical">
+    android:layout_margin="@dimen/_8sdp"
+    android:background="@color/white"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="@dimen/_8sdp">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/_8sdp"
-        android:background="@color/white"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:cardElevation="@dimen/_8sdp">
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/_16sdp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvWorkoutTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="200"
-                    android:text="Workout Title"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_20ssp"
-                    android:textStyle="bold"
-                    android:ellipsize="end"
-                    android:maxLines="2"/>
-
-                <View
-                    android:id="@+id/viewColor"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvWorkoutDetails"
+                android:id="@+id/tvWorkoutTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:maxHeight="@dimen/_170sdp"
-                android:text="xx intervals | 99:99"
-                android:textColor="@color/hintColor"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold"
-                android:ellipsize="end"/>
+                android:layout_weight="200"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Workout Title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/startWorkout"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/ic_play"
+                app:tint="@color/black" />
+
+            <ImageView
+                android:id="@+id/updateWorkout"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/black" />
+
+
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tvWorkoutDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:maxHeight="@dimen/_170sdp"
+            android:text="xx intervals | 99:99"
+            android:textColor="@color/hintColor"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/tvWorkoutInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:maxHeight="@dimen/_170sdp"
+            android:text="xx intervals | 99:99"
+            android:textColor="@color/hintColor"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
