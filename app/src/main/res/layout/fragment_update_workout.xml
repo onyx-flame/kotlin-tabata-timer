@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroundWhite"
+    tools:context=".fragments.UpdateWorkoutFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="@dimen/_8sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            android:layout_margin="@dimen/_16sdp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
+
+
+                    <EditText
+                        android:id="@+id/etTitleUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Title"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="textMultiLine" />
+
+                    <EditText
+                        android:id="@+id/etColorUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Color"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="textMultiLine" />
+
+                    <EditText
+                        android:id="@+id/etPrepareTitleUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Prepare Title"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="textMultiLine" />
+
+                    <EditText
+                        android:id="@+id/etPrepareTimeUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Prepare Time"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="numberPassword" />
+
+                    <EditText
+                        android:id="@+id/etWorkTitleUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Work Title"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="textMultiLine" />
+
+                    <EditText
+                        android:id="@+id/etWorkTimeUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Work Time"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="numberPassword" />
+
+                    <EditText
+                        android:id="@+id/etRestTitleUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Rest Title"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="textMultiLine" />
+
+                    <EditText
+                        android:id="@+id/etRestTimeUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Rest Time"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="numberPassword" />
+
+                    <EditText
+                        android:id="@+id/etCyclesRestTitleUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Cycles Rest Title"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="textMultiLine" />
+
+                    <EditText
+                        android:id="@+id/etCyclesRestTimeUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Cycles Rest Time"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="numberPassword" />
+
+                    <EditText
+                        android:id="@+id/etCoolDownTitleUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="CoolDown Title"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="textMultiLine" />
+
+                    <EditText
+                        android:id="@+id/etCoolDownTimeUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="CoolDown Time"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="numberPassword" />
+
+                    <EditText
+                        android:id="@+id/etCyclesCountUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Cycles Count"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="numberPassword" />
+
+                    <EditText
+                        android:id="@+id/etSetsCountUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Sets Count"
+                        android:gravity="start|top"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:inputType="numberPassword" />
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_32sdp"
+        android:clickable="true"
+        android:backgroundTint="@color/colorPrimary"
+        app:borderWidth="0dp"
+        android:tintMode="@color/white"
+        android:src="@drawable/ic_done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
