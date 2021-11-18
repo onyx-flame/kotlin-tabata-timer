@@ -17,10 +17,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.onyx.tabatatimer.MainActivity
 import com.onyx.tabatatimer.R
+import com.onyx.tabatatimer.SplashScreenActivity
 import com.onyx.tabatatimer.TimerActivity
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
+import com.onyx.tabatatimer.utils.WorkoutUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,7 +60,7 @@ class TimerService: LifecycleService() {
             when(it.action) {
                 Constants.ACTION_START_SERVICE -> {
                     workout = it.extras?.getParcelable("workout")!!
-                    timerMap = createTimerMutableMap(workout)
+                    timerMap = WorkoutUtil.getWorkoutDetails(workout).first
                     startForegroundService()
                 }
                 Constants.ACTION_STOP_SERVICE -> {
@@ -70,6 +72,40 @@ class TimerService: LifecycleService() {
                         countDownTimer.cancel()
                     } else {
                         startTimer()
+                    }
+                }
+                Constants.ACTION_NEXT_STEP_TIMER -> {
+                    if (currentStageNumber.value!! < timerMap.size) {
+                        countDownTimer.cancel()
+                        currentStageNumber.value = currentStageNumber.value!! + 1
+
+                        currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
+                        timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
+                        currentPhaseTitle.value = timerMap[currentStageNumber.value]
+
+                        if (isTimerRunning) {
+                            startTimer()
+                        }
+
+                    } else {
+                        Toast.makeText(this, "Can't Next", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                Constants.ACTION_PREVIOUS_STEP_TIMER -> {
+                    if (currentStageNumber.value!! > 1) {
+                        countDownTimer.cancel()
+                        currentStageNumber.value = currentStageNumber.value!! -  1
+
+                        currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
+                        timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
+                        currentPhaseTitle.postValue(timerMap[currentStageNumber.value])
+
+                        if (isTimerRunning) {
+                            startTimer()
+                        }
+
+                    } else {
+                        Toast.makeText(this, "Can't Previous", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else -> Unit
@@ -141,9 +177,7 @@ class TimerService: LifecycleService() {
 
                         if (currentStageNumber.value!! + 1 <= timerMap.size) {
                             currentStageNumber.value = currentStageNumber.value!! + 1
-                            currentPhaseTime.postValue(
-                               getStageTime(currentStageNumber.value!!)
-                            )
+                            currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
                             timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
                             currentPhaseTitle.postValue(timerMap[currentStageNumber.value])
                             this@TimerService.startTimer()
@@ -183,28 +217,11 @@ class TimerService: LifecycleService() {
         PendingIntent.getActivity(
             this,
             143,
-            Intent(this, MainActivity::class.java).apply {
+            Intent(this, SplashScreenActivity::class.java).apply {
                 this.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             },
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
-    private fun createTimerMutableMap(workout: Workout): MutableMap<Int, String> {
-        var timerMap = mutableMapOf<Int, String>()
-        val stepsCount = 1 + (2 * workout.cycles - 1) * workout.sets + (workout.sets - 1) + 1
-        timerMap[1] = "Prepare"
-        var currentStepIndex = 2
-        for (j in 0 until workout.sets) {
-            for (k in 0 until workout.cycles-1) {
-                timerMap[currentStepIndex++] = "Work"
-                timerMap[currentStepIndex++] = "Rest"
-            }
-            timerMap[currentStepIndex++] = "Work"
-            timerMap[currentStepIndex++] = "Cycle Rest"
-        }
-        timerMap[stepsCount] = "CoolDown"
-        return timerMap
-    }
 
     private fun getStageTime(currentNumber: Int): Int {
         return when (timerMap[currentNumber]) {

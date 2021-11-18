@@ -11,6 +11,7 @@ import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.service.TimerService
 import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
+import com.onyx.tabatatimer.utils.WorkoutUtil
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -34,12 +35,30 @@ class TimerActivity : AppCompatActivity() {
         binding.tvPhase.text = workout.title
 
         binding.fabStartPause.setOnClickListener {
+            if (TimerService.isServiceStopped)
+                sendCommandToService(Constants.ACTION_START_SERVICE)
+            else
             togglePlayPause()
         }
 
+        binding.fabNext.setOnClickListener {
+            sendCommandToService(Constants.ACTION_NEXT_STEP_TIMER)
+        }
+
+        binding.fabPrevious.setOnClickListener {
+            sendCommandToService(Constants.ACTION_PREVIOUS_STEP_TIMER)
+        }
+
+        binding.fabStop.setOnClickListener {
+            if (!TimerService.isServiceStopped)
+            sendCommandToService(Constants.ACTION_STOP_SERVICE)
+        }
+
+
+
         setObservers()
         if (TimerService.isServiceStopped)
-        sendCommandToService(Constants.ACTION_START_SERVICE)
+            sendCommandToService(Constants.ACTION_START_SERVICE)
 
     }
 
@@ -83,7 +102,7 @@ class TimerActivity : AppCompatActivity() {
         })
         TimerService.currentStageNumber.observe(this, Observer {
             if (it != -1) {
-                binding.tvStage.text = "$it/${getWorkoutStepsCount()}"
+                binding.tvStage.text = "$it/${WorkoutUtil.getWorkoutStepsCount(workout)}"
             }
         })
     }
@@ -97,10 +116,6 @@ class TimerActivity : AppCompatActivity() {
                 }
             }
         )
-    }
-
-    private fun getWorkoutStepsCount(): Int {
-        return 1 + (2 * workout.cycles - 1) * workout.sets + (workout.sets - 1) + 1
     }
 
 

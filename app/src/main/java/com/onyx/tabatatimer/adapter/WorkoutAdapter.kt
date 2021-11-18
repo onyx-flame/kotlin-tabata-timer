@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.onyx.tabatatimer.databinding.WorkoutLayoutAdapterBinding
 import com.onyx.tabatatimer.fragments.HomeFragmentDirections
 import com.onyx.tabatatimer.models.Workout
+import com.onyx.tabatatimer.utils.WorkoutUtil
 
 class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
 
@@ -47,7 +48,8 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
             "Cooldown: ${currentWorkout.coolDownTime} sec\n" +
             "Cycles: ${currentWorkout.cycles}\n" +
             "Sets: ${currentWorkout.sets}"
-        holder.itemBinding.tvWorkoutInfo.text = "228 intervals | 13:37"
+        val time = WorkoutUtil.getWorkoutDetails(currentWorkout).second
+        holder.itemBinding.tvWorkoutInfo.text = "${WorkoutUtil.getWorkoutStepsCount(currentWorkout)} intervals | ${time/60}:${time%60}"
 
         holder.itemView.setOnClickListener {
             if (holder.itemBinding.tvWorkoutDetails.visibility == View.GONE) {
