@@ -58,7 +58,8 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
 
         }
         holder.itemBinding.startWorkout.setOnClickListener { view ->
-            Toast.makeText(view.context, "Start Workout!", Toast.LENGTH_SHORT).show()
+            val direction = HomeFragmentDirections.actionHomeFragmentToTimerActivity(currentWorkout)
+            view.findNavController().navigate(direction)
         }
         holder.itemBinding.updateWorkout.setOnClickListener { view ->
             val direction = HomeFragmentDirections.actionHomeFragmentToUpdateWorkoutFragment(currentWorkout)

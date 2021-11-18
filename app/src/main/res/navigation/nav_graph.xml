@@ -24,6 +24,9 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_homeFragment_to_timerActivity"
+            app:destination="@id/timerActivity" />
     </fragment>
     <fragment
         android:id="@+id/newWorkoutFragment"
@@ -59,4 +62,15 @@
             app:argType="com.onyx.tabatatimer.models.Workout"
             app:nullable="true" />
     </fragment>
+    <activity
+        android:id="@+id/timerActivity"
+        android:name="com.onyx.tabatatimer.TimerActivity"
+        android:label="activity_timer"
+        tools:layout="@layout/activity_timer" >
+        <argument
+            android:name="workout"
+            app:argType="com.onyx.tabatatimer.models.Workout"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </activity>
 </navigation>
