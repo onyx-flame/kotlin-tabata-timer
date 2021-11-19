@@ -45,18 +45,16 @@
                         android:layout_marginTop="@dimen/_16sdp"
                         android:inputType="textMultiLine" />
 
-                    <EditText
-                        android:id="@+id/etColor"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvColor"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:hint="Color"
-                        android:gravity="start|top"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="@dimen/_15ssp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_16sdp"
-                        android:inputType="textMultiLine" />
+                        app:cardBackgroundColor="@color/backgroundWhite"
+                        android:elevation="@dimen/_8sdp"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:strokeColor="@color/black"
+                        app:strokeWidth="@dimen/_1sdp"/>
 
                     <EditText
                         android:id="@+id/etPrepareTitle"

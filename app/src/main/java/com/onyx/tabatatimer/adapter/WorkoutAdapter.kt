@@ -39,6 +39,7 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
 
     override fun onBindViewHolder(holder: WorkoutViewHolder, position: Int) {
         val currentWorkout = differ.currentList[position]
+        holder.itemBinding.cvWorkout.setCardBackgroundColor(currentWorkout.color)
         holder.itemBinding.tvWorkoutTitle.text = currentWorkout.title
         holder.itemBinding.tvWorkoutDetails.text =
             "Prepare: ${currentWorkout.prepareTime} sec\n" +

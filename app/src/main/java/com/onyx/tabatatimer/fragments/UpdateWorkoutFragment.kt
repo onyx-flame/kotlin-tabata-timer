@@ -1,17 +1,21 @@
 package com.onyx.tabatatimer.fragments
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.google.android.material.snackbar.Snackbar
 import com.onyx.tabatatimer.MainActivity
 import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.databinding.FragmentUpdateWorkoutBinding
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
+import java.lang.String
 
 class UpdateWorkoutFragment : Fragment() {
 
@@ -55,10 +59,21 @@ class UpdateWorkoutFragment : Fragment() {
             etSetsCountUpdate.transformationMethod = null
         }
 
+        binding.cvColorUpdate.setOnClickListener {
+            ColorPickerDialog
+                .Builder(requireContext())
+                .setTitle("Pick Workout Color")
+                .setColorShape(ColorShape.CIRCLE)
+                .setColorListener { color, colorHex ->
+                    binding.cvColorUpdate.setCardBackgroundColor(color)
+                }
+                .show()
+        }
+
         currentWorkout = args.workout!!
         binding.apply {
             etTitleUpdate.setText(currentWorkout.title)
-            etColorUpdate.setText(currentWorkout.color)
+            cvColorUpdate.setCardBackgroundColor(currentWorkout.color)
             etPrepareTitleUpdate.setText(currentWorkout.prepareDescription)
             etPrepareTimeUpdate.setText(currentWorkout.prepareTime.toString())
             etWorkTitleUpdate.setText(currentWorkout.workDescription)
@@ -74,7 +89,7 @@ class UpdateWorkoutFragment : Fragment() {
         }
         binding.fabUpdate.setOnClickListener {
             val workoutTitle = binding.etTitleUpdate.text.toString()
-            val workoutColor = binding.etColorUpdate.text.toString()
+            val workoutColor = binding.cvColorUpdate.cardBackgroundColor.defaultColor
             val workoutPrepareTitle = binding.etPrepareTitleUpdate.text.toString()
             val workoutPrepareTime = binding.etPrepareTimeUpdate.text.toString().toInt()
             val workoutWorkTitle = binding.etWorkTitleUpdate.text.toString()

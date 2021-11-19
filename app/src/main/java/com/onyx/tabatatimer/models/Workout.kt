@@ -13,7 +13,7 @@ data class Workout(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
-    val color: String,
+    val color: Int,
     val prepareDescription: String?,
     val prepareTime: Int,
     val workDescription: String?,

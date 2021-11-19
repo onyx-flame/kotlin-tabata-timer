@@ -1,15 +1,20 @@
 package com.onyx.tabatatimer.fragments
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.google.android.material.snackbar.Snackbar
 import com.onyx.tabatatimer.MainActivity
 import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.databinding.FragmentNewWorkoutBinding
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
+import java.lang.String
 
 class NewWorkoutFragment : Fragment() {
 
@@ -54,11 +59,21 @@ class NewWorkoutFragment : Fragment() {
             etCyclesCount.transformationMethod = null
             etSetsCount.transformationMethod = null
         }
+        binding.cvColor.setOnClickListener {
+            ColorPickerDialog
+                .Builder(requireContext())
+                .setTitle("Pick Workout Color")
+                .setColorShape(ColorShape.CIRCLE)
+                .setColorListener { color, colorHex ->
+                    binding.cvColor.setCardBackgroundColor(color)
+                }
+                .show()
+        }
     }
 
     private fun saveWorkout(view: View) {
         val workoutTitle = binding.etTitle.text.toString()
-        val workoutColor = binding.etColor.text.toString()
+        val workoutColor = binding.cvColor.cardBackgroundColor.defaultColor
         val workoutPrepareTitle = binding.etPrepareTitle.text.toString()
         val workoutPrepareTime = binding.etPrepareTime.text.toString().toInt()
         val workoutWorkTitle = binding.etWorkTitle.text.toString()
