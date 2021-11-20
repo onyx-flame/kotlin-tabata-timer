@@ -1,13 +1,16 @@
 package com.onyx.tabatatimer
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.onyx.tabatatimer.adapter.WorkoutPhaseAdapter
 import com.onyx.tabatatimer.databinding.ActivityTimerBinding
 import com.onyx.tabatatimer.models.Workout
@@ -55,16 +58,9 @@ class TimerActivity : AppCompatActivity() {
             sendCommandToService(Constants.ACTION_PREVIOUS_STEP_TIMER)
         }
 
-        binding.fabStop.setOnClickListener {
-            if (!TimerService.isServiceStopped)
-            sendCommandToService(Constants.ACTION_STOP_SERVICE)
-        }
-
-
-
         setObservers()
         if (TimerService.isServiceStopped) {
-            timerMap = WorkoutUtil.getWorkoutDetails(workout).first
+            timerMap = WorkoutUtil.getWorkoutDetails(workout)
             sendCommandToService(Constants.ACTION_START_SERVICE)
         } else {
             timerMap = TimerService.timerMap
@@ -130,21 +126,23 @@ class TimerActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this,MainActivity::class.java)
-        startActivity(intent)
-        finish()
-        sendCommandToService(Constants.ACTION_STOP_SERVICE)
+        AlertDialog.Builder(this).apply {
+            setTitle("Exit Workout")
+            setMessage("Do you want to exit current workout?")
+            setPositiveButton("Yes") { _,_ ->
+                val intent = Intent(this@TimerActivity,MainActivity::class.java)
+                startActivity(intent)
+                finish()
+                sendCommandToService(Constants.ACTION_STOP_SERVICE)
+            }
+            setNegativeButton("No", null)
+        }.create().show()
         //super.onBackPressed()
     }
 
     private fun setUpRecyclerView() {
         workoutPhaseAdapter = WorkoutPhaseAdapter()
-        val spanCount =
-            if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
-                2
-            } else {
-                1
-            }
+        val spanCount = 1
         binding.recyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(
                 spanCount,

@@ -1,10 +1,8 @@
 package com.onyx.tabatatimer.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -46,11 +44,11 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
             "Work: ${currentWorkout.workTime} sec\n" +
             "Rest: ${currentWorkout.restTime} sec\n" +
             "Cycles Rest: ${currentWorkout.cyclesRestTime} sec\n" +
-            "Cooldown: ${currentWorkout.coolDownTime} sec\n" +
+            "CoolDown: ${currentWorkout.coolDownTime} sec\n" +
             "Cycles: ${currentWorkout.cycles}\n" +
             "Sets: ${currentWorkout.sets}"
-        val time = WorkoutUtil.getWorkoutDetails(currentWorkout).second
-        holder.itemBinding.tvWorkoutInfo.text = "${WorkoutUtil.getWorkoutStepsCount(currentWorkout)} intervals | ${time/60}:${time%60}"
+        val time = WorkoutUtil.getWorkoutTime(currentWorkout)
+        holder.itemBinding.tvWorkoutInfo.text = "${WorkoutUtil.getWorkoutStepsCount(currentWorkout)} intervals | ${getFormattedWorkoutTime(time)}"
 
         holder.itemView.setOnClickListener {
             if (holder.itemBinding.tvWorkoutDetails.visibility == View.GONE) {
@@ -67,7 +65,6 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
         holder.itemBinding.updateWorkout.setOnClickListener { view ->
             val direction = HomeFragmentDirections.actionHomeFragmentToUpdateWorkoutFragment(currentWorkout)
             view.findNavController().navigate(direction)
-            Toast.makeText(view.context, "Edit Workout", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -75,5 +72,13 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
         return differ.currentList.size
     }
 
+    private fun getFormattedWorkoutTime(time: Int) : String {
+        return if (time % 60 < 10) {
+            "${time / 60}:0${time % 60}"
+        } else {
+            "${time / 60}:0${time % 60}"
+        }
+
+    }
 
 }

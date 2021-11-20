@@ -1,6 +1,7 @@
 package com.onyx.tabatatimer.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -36,7 +37,11 @@ class WorkoutPhaseAdapter: RecyclerView.Adapter<WorkoutPhaseAdapter.WorkoutPhase
         val currentWorkoutPhase = differ.currentList[position]
         holder.itemBinding.tvPhaseNumber.text = currentWorkoutPhase.number.toString()
         holder.itemBinding.tvPhaseTitle.text = currentWorkoutPhase.phaseTitle
-        holder.itemBinding.tvPhaseDescription.text = currentWorkoutPhase.phaseDescription
+        val description = currentWorkoutPhase.phaseDescription
+        holder.itemBinding.tvPhaseDescription.text = description
+        if (description.isNullOrEmpty()) {
+            holder.itemBinding.tvPhaseDescription.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int {

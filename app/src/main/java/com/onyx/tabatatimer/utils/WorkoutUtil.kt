@@ -11,28 +11,38 @@ class WorkoutUtil {
             return 1 + (2 * workout.cycles - 1) * workout.sets + (workout.sets - 1) + 1
         }
 
-        fun getWorkoutDetails(workout: Workout): Pair<List<WorkoutPhase>, Int> {
+        fun getWorkoutTime(workout: Workout): Int {
+            var time = workout.prepareTime
+            for (j in 0 until workout.sets) {
+                for (k in 0 until workout.cycles-1) {
+                    time += workout.workTime
+                    time += workout.restTime
+                }
+                time += workout.workTime
+                if (j < workout.sets - 1) {
+                    time += workout.cyclesRestTime
+                }
+            }
+            time += workout.coolDownTime
+            return time
+        }
+
+        fun getWorkoutDetails(workout: Workout): List<WorkoutPhase> {
             var phaseList = mutableListOf<WorkoutPhase>()
-            var time = 0
-            val stepsCount = WorkoutUtil.getWorkoutStepsCount(workout)
+            val stepsCount = getWorkoutStepsCount(workout)
             phaseList.add(WorkoutPhase(1, "Prepare", workout.prepareDescription.toString()))
             var currentStepIndex = 2
             for (j in 0 until workout.sets) {
                 for (k in 0 until workout.cycles-1) {
                     phaseList.add(WorkoutPhase(currentStepIndex++, "Work", workout.workDescription.toString()))
-                    time += workout.workTime
                     phaseList.add(WorkoutPhase(currentStepIndex++, "Rest", workout.restDescription.toString()))
-                    time += workout.restTime
                 }
                 phaseList.add(WorkoutPhase(currentStepIndex++, "Work", workout.workDescription.toString()))
-                time += workout.workTime
                 phaseList.add(WorkoutPhase(currentStepIndex++, "Cycle Rest", workout.cyclesRestDescription.toString()))
-                time += workout.cyclesRestTime
             }
             phaseList[stepsCount - 1] = (WorkoutPhase(stepsCount, "CoolDown", workout.coolDownDescription.toString()))
-            time += workout.coolDownTime
             Log.d("TTT",phaseList.toString())
-            return Pair(phaseList, time)
+            return phaseList
         }
 
     }

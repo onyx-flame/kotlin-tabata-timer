@@ -7,7 +7,6 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.CountDownTimer
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -15,10 +14,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.onyx.tabatatimer.MainActivity
 import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.SplashScreenActivity
-import com.onyx.tabatatimer.TimerActivity
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.models.WorkoutPhase
 import com.onyx.tabatatimer.utils.Constants
@@ -61,7 +58,7 @@ class TimerService: LifecycleService() {
             when(it.action) {
                 Constants.ACTION_START_SERVICE -> {
                     workout = it.extras?.getParcelable("workout")!!
-                    timerMap = WorkoutUtil.getWorkoutDetails(workout).first
+                    timerMap = WorkoutUtil.getWorkoutDetails(workout)
                     startForegroundService()
                 }
                 Constants.ACTION_STOP_SERVICE -> {
@@ -78,16 +75,10 @@ class TimerService: LifecycleService() {
                 Constants.ACTION_NEXT_STEP_TIMER -> {
                     if (currentStageNumber.value!! < timerMap.size) {
                         countDownTimer.cancel()
-                        currentStageNumber.value = currentStageNumber.value!! + 1
-
-                        currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
-                        timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
-                        currentPhaseTitle.value = timerMap[currentStageNumber.value!! -1].phaseTitle
-
+                        updateWorkoutPhaseInfo(1)
                         if (isTimerRunning) {
                             startTimer()
                         }
-
                     } else {
                         Toast.makeText(this, "Can't Next", Toast.LENGTH_SHORT).show()
                     }
@@ -95,16 +86,10 @@ class TimerService: LifecycleService() {
                 Constants.ACTION_PREVIOUS_STEP_TIMER -> {
                     if (currentStageNumber.value!! > 1) {
                         countDownTimer.cancel()
-                        currentStageNumber.value = currentStageNumber.value!! -  1
-
-                        currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
-                        timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
-                        currentPhaseTitle.value = timerMap[currentStageNumber.value!! -1].phaseTitle
-
+                        updateWorkoutPhaseInfo(-1)
                         if (isTimerRunning) {
                             startTimer()
                         }
-
                     } else {
                         Toast.makeText(this, "Can't Previous", Toast.LENGTH_SHORT).show()
                     }
@@ -116,9 +101,9 @@ class TimerService: LifecycleService() {
     }
 
     private fun resetValues() {
-        timerEvent.postValue(TimerEvent.END)
-        currentPhaseTitle.postValue("Congrats!")
-        timerInMillis.postValue(0L)
+        timerEvent.value = TimerEvent.END
+        currentPhaseTitle.value = "Congrats!"
+        timerInMillis.value = 0L
     }
 
     private fun startForegroundService() {
@@ -145,7 +130,7 @@ class TimerService: LifecycleService() {
     private fun stopService() {
         isServiceStopped = true
         currentStageNumber.value = -1
-        resetValues()
+        //resetValues()
         notificationManager.cancel(Constants.NOTIFICATION_ID)
         countDownTimer.cancel()
         tickPlayer.release()
@@ -159,17 +144,15 @@ class TimerService: LifecycleService() {
             if (!isServiceStopped && timerEvent.value == TimerEvent.START) {
                 if (currentStageNumber.value == -1) {
                     currentStageNumber.value = 1
-                    currentPhaseTitle.postValue(timerMap[currentStageNumber.value!! -1].phaseTitle)
-                    currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
-                    timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
+                    updateWorkoutPhaseInfo()
                 }
                 countDownTimer = object : CountDownTimer((timerInMillis.value!!).toLong(), 1000) {
                     override fun onTick(p0: Long) {
                         isTimerRunning = true
-                        if (p0 <= 3000) {
+                        if (p0 <= 3000 ) {
                             tickPlayer.start()
                         }
-                        timerInMillis.postValue(p0)
+                        timerInMillis.value = p0
                     }
 
                     override fun onFinish() {
@@ -177,14 +160,10 @@ class TimerService: LifecycleService() {
                         successPlayer.start()
 
                         if (currentStageNumber.value!! + 1 <= timerMap.size) {
-                            currentStageNumber.value = currentStageNumber.value!! + 1
-                            currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
-                            timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
-                            currentPhaseTitle.postValue(timerMap[currentStageNumber.value!! -1].phaseTitle)
+                            updateWorkoutPhaseInfo(1)
                             this@TimerService.startTimer()
                         } else {
                             timerInMillis.value = 0L
-                            Toast.makeText(applicationContext, "Time's up!", Toast.LENGTH_SHORT).show()
                             stopService()
                         }
                     }
@@ -224,7 +203,7 @@ class TimerService: LifecycleService() {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-    private fun getStageTime(currentNumber: Int): Int {
+    private fun getPhaseTime(currentNumber: Int): Int {
         return when (timerMap[currentNumber - 1].phaseTitle) {
             "Prepare" -> workout.prepareTime
             "Work" -> workout.workTime
@@ -233,6 +212,15 @@ class TimerService: LifecycleService() {
             "CoolDown" -> workout.coolDownTime
             else -> 0
         }
+    }
+
+    private fun updateWorkoutPhaseInfo(phaseShift: Int = 0) {
+        if (phaseShift != 0) {
+            currentStageNumber.value = currentStageNumber.value!! + phaseShift
+        }
+        currentPhaseTitle.value = timerMap[currentStageNumber.value!! -1].phaseTitle
+        currentPhaseTime.value = getPhaseTime(currentStageNumber.value!!)
+        timerInMillis.value = (getPhaseTime(currentStageNumber.value!!) * 1000).toLong()
     }
 
 }
