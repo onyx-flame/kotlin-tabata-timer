@@ -1,13 +1,17 @@
 package com.onyx.tabatatimer
 
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.navigation.navArgs
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.onyx.tabatatimer.adapter.WorkoutPhaseAdapter
 import com.onyx.tabatatimer.databinding.ActivityTimerBinding
 import com.onyx.tabatatimer.models.Workout
+import com.onyx.tabatatimer.models.WorkoutPhase
 import com.onyx.tabatatimer.service.TimerService
 import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
@@ -21,6 +25,8 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTimerBinding
     private val args: TimerActivityArgs by navArgs<TimerActivityArgs>()
     private lateinit var workout: Workout
+    private lateinit var timerMap: List<WorkoutPhase>
+    private lateinit var workoutPhaseAdapter: WorkoutPhaseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +63,13 @@ class TimerActivity : AppCompatActivity() {
 
 
         setObservers()
-        if (TimerService.isServiceStopped)
+        if (TimerService.isServiceStopped) {
+            timerMap = WorkoutUtil.getWorkoutDetails(workout).first
             sendCommandToService(Constants.ACTION_START_SERVICE)
+        } else {
+            timerMap = TimerService.timerMap
+        }
+        setUpRecyclerView()
 
     }
 
@@ -86,8 +97,7 @@ class TimerActivity : AppCompatActivity() {
 
         TimerService.timerInMillis.observe(this, Observer {
             val currentMillis = (it/1000f).roundToInt()
-            Log.d("TTT", "MAX: ${binding.cpi.max}")
-            Log.d("TTT", "CURRENT: ${currentMillis}")
+            Log.d("TTT", "CURRENT: $currentMillis")
             binding.apply {
                 tvTimer.text = currentMillis.toString()
                 cpi.progress = currentMillis
@@ -103,6 +113,7 @@ class TimerActivity : AppCompatActivity() {
         TimerService.currentStageNumber.observe(this, Observer {
             if (it != -1) {
                 binding.tvStage.text = "$it/${WorkoutUtil.getWorkoutStepsCount(workout)}"
+                binding.recyclerView.smoothScrollToPosition(it - 1)
             }
         })
     }
@@ -116,6 +127,33 @@ class TimerActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+        finish()
+        sendCommandToService(Constants.ACTION_STOP_SERVICE)
+        //super.onBackPressed()
+    }
+
+    private fun setUpRecyclerView() {
+        workoutPhaseAdapter = WorkoutPhaseAdapter()
+        val spanCount =
+            if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
+                2
+            } else {
+                1
+            }
+        binding.recyclerView.apply {
+            layoutManager = StaggeredGridLayoutManager(
+                spanCount,
+                StaggeredGridLayoutManager.VERTICAL
+            )
+            setHasFixedSize(true)
+            adapter = workoutPhaseAdapter
+        }
+        workoutPhaseAdapter.differ.submitList(timerMap)
     }
 
 

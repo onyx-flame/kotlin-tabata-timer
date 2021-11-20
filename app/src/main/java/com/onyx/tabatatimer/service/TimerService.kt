@@ -20,6 +20,7 @@ import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.SplashScreenActivity
 import com.onyx.tabatatimer.TimerActivity
 import com.onyx.tabatatimer.models.Workout
+import com.onyx.tabatatimer.models.WorkoutPhase
 import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
 import com.onyx.tabatatimer.utils.WorkoutUtil
@@ -32,7 +33,7 @@ class TimerService: LifecycleService() {
 
     companion object {
         lateinit var workout: Workout
-        lateinit var timerMap: MutableMap<Int, String>
+        lateinit var timerMap: List<WorkoutPhase>
         val timerEvent = MutableLiveData<TimerEvent>()
         val timerInMillis = MutableLiveData<Long>()
         val currentStageNumber = MutableLiveData<Int>(-1)
@@ -81,7 +82,7 @@ class TimerService: LifecycleService() {
 
                         currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
                         timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
-                        currentPhaseTitle.value = timerMap[currentStageNumber.value]
+                        currentPhaseTitle.value = timerMap[currentStageNumber.value!! -1].phaseTitle
 
                         if (isTimerRunning) {
                             startTimer()
@@ -98,7 +99,7 @@ class TimerService: LifecycleService() {
 
                         currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
                         timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
-                        currentPhaseTitle.postValue(timerMap[currentStageNumber.value])
+                        currentPhaseTitle.value = timerMap[currentStageNumber.value!! -1].phaseTitle
 
                         if (isTimerRunning) {
                             startTimer()
@@ -158,7 +159,7 @@ class TimerService: LifecycleService() {
             if (!isServiceStopped && timerEvent.value == TimerEvent.START) {
                 if (currentStageNumber.value == -1) {
                     currentStageNumber.value = 1
-                    currentPhaseTitle.postValue(timerMap[currentStageNumber.value])
+                    currentPhaseTitle.postValue(timerMap[currentStageNumber.value!! -1].phaseTitle)
                     currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
                     timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
                 }
@@ -179,7 +180,7 @@ class TimerService: LifecycleService() {
                             currentStageNumber.value = currentStageNumber.value!! + 1
                             currentPhaseTime.value = getStageTime(currentStageNumber.value!!)
                             timerInMillis.value = (getStageTime(currentStageNumber.value!!) * 1000).toLong()
-                            currentPhaseTitle.postValue(timerMap[currentStageNumber.value])
+                            currentPhaseTitle.postValue(timerMap[currentStageNumber.value!! -1].phaseTitle)
                             this@TimerService.startTimer()
                         } else {
                             timerInMillis.value = 0L
@@ -224,7 +225,7 @@ class TimerService: LifecycleService() {
         )
 
     private fun getStageTime(currentNumber: Int): Int {
-        return when (timerMap[currentNumber]) {
+        return when (timerMap[currentNumber - 1].phaseTitle) {
             "Prepare" -> workout.prepareTime
             "Work" -> workout.workTime
             "Rest" -> workout.restTime

@@ -1,6 +1,8 @@
 package com.onyx.tabatatimer.utils
 
+import android.util.Log
 import com.onyx.tabatatimer.models.Workout
+import com.onyx.tabatatimer.models.WorkoutPhase
 
 class WorkoutUtil {
     companion object {
@@ -9,27 +11,28 @@ class WorkoutUtil {
             return 1 + (2 * workout.cycles - 1) * workout.sets + (workout.sets - 1) + 1
         }
 
-        fun getWorkoutDetails(workout: Workout): Pair<MutableMap<Int, String>, Int> {
-            var timerMap = mutableMapOf<Int, String>()
+        fun getWorkoutDetails(workout: Workout): Pair<List<WorkoutPhase>, Int> {
+            var phaseList = mutableListOf<WorkoutPhase>()
             var time = 0
             val stepsCount = WorkoutUtil.getWorkoutStepsCount(workout)
-            timerMap[1] = "Prepare"
+            phaseList.add(WorkoutPhase(1, "Prepare", workout.prepareDescription.toString()))
             var currentStepIndex = 2
             for (j in 0 until workout.sets) {
                 for (k in 0 until workout.cycles-1) {
-                    timerMap[currentStepIndex++] = "Work"
+                    phaseList.add(WorkoutPhase(currentStepIndex++, "Work", workout.workDescription.toString()))
                     time += workout.workTime
-                    timerMap[currentStepIndex++] = "Rest"
+                    phaseList.add(WorkoutPhase(currentStepIndex++, "Rest", workout.restDescription.toString()))
                     time += workout.restTime
                 }
-                timerMap[currentStepIndex++] = "Work"
+                phaseList.add(WorkoutPhase(currentStepIndex++, "Work", workout.workDescription.toString()))
                 time += workout.workTime
-                timerMap[currentStepIndex++] = "Cycle Rest"
+                phaseList.add(WorkoutPhase(currentStepIndex++, "Cycle Rest", workout.cyclesRestDescription.toString()))
                 time += workout.cyclesRestTime
             }
-            timerMap[stepsCount] = "CoolDown"
+            phaseList[stepsCount - 1] = (WorkoutPhase(stepsCount, "CoolDown", workout.coolDownDescription.toString()))
             time += workout.coolDownTime
-            return Pair(timerMap, time)
+            Log.d("TTT",phaseList.toString())
+            return Pair(phaseList, time)
         }
 
     }
