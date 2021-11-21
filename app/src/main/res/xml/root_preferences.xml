@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/appearance_header">
+
+        <SwitchPreferenceCompat
+            app:key="dark_theme"
+            app:title="@string/dark_theme_title" />
+
+        <ListPreference
+            app:defaultValue="normal"
+            app:entries="@array/font_size_entries"
+            app:entryValues="@array/font_size_values"
+            app:key="font_size"
+            app:title="@string/font_size_title"
+            app:useSimpleSummaryProvider="true"  />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/language_header">
+
+        <ListPreference
+            app:defaultValue="eng"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="language"
+            app:title="@string/language_header"
+            app:useSimpleSummaryProvider="true"  />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -76,7 +76,7 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
         return if (time % 60 < 10) {
             "${time / 60}:0${time % 60}"
         } else {
-            "${time / 60}:0${time % 60}"
+            "${time / 60}:${time % 60}"
         }
 
     }

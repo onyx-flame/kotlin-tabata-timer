@@ -41,6 +41,15 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.menu.home_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.settings_menu -> {
+                view?.findNavController()?.navigate(R.id.action_homeFragment_to_settingsFragment)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         workoutViewModel = (activity as MainActivity).workoutViewModel

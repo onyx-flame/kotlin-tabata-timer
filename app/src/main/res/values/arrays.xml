@@ -1,0 +1,25 @@
+<resources>
+
+    <string-array name="font_size_entries">
+        <item>Small</item>
+        <item>Normal</item>
+        <item>Large</item>
+    </string-array>
+
+    <string-array name="font_size_values">
+        <item>small</item>
+        <item>normal</item>
+        <item>large</item>
+    </string-array>
+
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Русский</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>eng</item>
+        <item>ru</item>
+    </string-array>
+
+</resources>

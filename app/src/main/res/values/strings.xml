@@ -2,4 +2,14 @@
     <string name="app_name">Tabata Timer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="appearance_header">Appearance</string>
+    <string name="language_header">Language</string>
+
+    <!-- Appearance Preferences -->
+    <string name="dark_theme_title">Use dark theme</string>
+    <string name="font_size_title">Font size</string>
+
+    <!-- Language Preferences -->
+    <string name="language_title">Language</string>
 </resources>
