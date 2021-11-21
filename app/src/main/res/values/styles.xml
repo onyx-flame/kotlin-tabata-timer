@@ -4,6 +4,6 @@
     <style name="SearchViewStyle">
         <item name="android:editTextColor">@color/black</item>
         <item name="android:textColorHint">@color/hintColor</item>
-    </style>
+    </style>z
 
 </resources>

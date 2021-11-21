@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Preference Titles -->
+    <string name="appearance_header">Внешний вид</string>
+    <string name="language_header">Язык</string>
+
+    <!-- Appearance Preferences -->
+    <string name="dark_theme_title">Использовать темную тему</string>
+    <string name="font_size_title">Размер шрифта</string>
+
+    <!-- Language Preferences -->
+    <string name="language_title">Язык</string>
+
+</resources>

@@ -19,10 +19,11 @@ import com.onyx.tabatatimer.service.TimerService
 import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
 import com.onyx.tabatatimer.utils.WorkoutUtil
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import java.util.*
 import kotlin.math.roundToInt
 
-class TimerActivity : AppCompatActivity() {
+class TimerActivity : LocaleAwareCompatActivity() {
 
     private var isTimerRunning = false
     private lateinit var binding: ActivityTimerBinding
