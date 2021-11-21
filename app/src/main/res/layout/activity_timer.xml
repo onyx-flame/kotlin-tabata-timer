@@ -2,30 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TimerActivity">
+
+    <ImageView
+        android:id="@+id/ivExit"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:src="@drawable/ic_exit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tvPhase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tabata"
-        android:textSize="60sp"
+        tools:text="Tabata"
+        android:textSize="@dimen/_30sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivExit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="@+id/ivExit" />
 
-    <TextView
-        android:id="@+id/tvStage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0/70"
-        android:textSize="30sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPhase"
-        />
 
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -33,9 +35,10 @@
         style="@style/Widget.MaterialComponents.CircularProgressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
         android:max="30"
         android:progress="30"
-        app:indicatorSize="150dp"
+        app:indicatorSize="@dimen/_150sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPhase" />
@@ -44,52 +47,80 @@
         android:id="@+id/tvTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="\?"
-        android:textSize="50sp"
+        android:padding="@dimen/_16sdp"
+        tools:text="\?"
+        android:textSize="@dimen/_50sdp"
         app:layout_constraintBottom_toBottomOf="@+id/cpi"
         app:layout_constraintEnd_toEndOf="@+id/cpi"
         app:layout_constraintStart_toStartOf="@+id/cpi"
-        app:layout_constraintTop_toBottomOf="@+id/tvPhase" />
+        app:layout_constraintTop_toTopOf="@+id/cpi" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabStartPause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/ivPlay"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
         android:src="@drawable/ic_play"
-        app:backgroundTint="@color/teal_200"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@android:color/white"
-        app:tint="@android:color/black" />
+        android:layout_margin="@dimen/_5sdp"
+        android:visibility="gone"
+        app:tint="@color/black" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPrevious"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fabStartPause"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_skip_previous" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/ivPause"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:src="@drawable/ic_pause"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fabStartPause"
-        app:srcCompat="@drawable/ic_skip_next" />
+        android:layout_margin="@dimen/_5sdp"
+        android:visibility="visible"
+        app:tint="@color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/fabStartPause"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@+id/tvStage"
+        app:layout_constraintTop_toBottomOf="@+id/cpi"
+        tools:layout_editor_absoluteX="6dp" />
+
+    <ImageView
+        android:id="@+id/ivPrevious"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:src="@drawable/ic_skip_previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tvStage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="0/70"
+        android:textSize="@dimen/_30sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivPrevious"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivPrevious" />
+
+    <ImageView
+        android:id="@+id/ivNext"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:src="@drawable/ic_skip_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_5sdp"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/shit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/cpi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,57 @@
 <resources>
-    <string name="app_name" translatable="false">Tabata Timer</string>
+    <string name="app_name">Tabata Timer</string>
 
-    <!-- Preference Titles -->
+    <string name="home_menu_toolbar_title">Tabata Timer</string>
+    <string name="update_workout_menu_toolbar_title">Edit Workout</string>
+    <string name="new_workout_menu_toolbar_title">New Workout</string>
+    <string name="settings_menu_toolbar_title">Settings</string>
+    <string name="search_view_hint">Search Workouts</string>
+    <string name="no_workouts_text">No Workouts!</string>
+    <string name="workout_layout_adapter_info_template">%1$d intervals | %2$s</string>
+    <string name="workout_layout_adapter_details_template">Prepare: %1$d sec\nWork: %2$d sec\nRest: %3$d sec\nCycles: %4$d\nSets: %5$d\nSets Rest: %6$d sec\nCool Down: %7$d sec\n</string>
+    <string name="edit_workout_title">Title:</string>
+    <string name="edit_workout_color">Color:</string>
+    <string name="edit_workout_prepare">Prepare:</string>
+    <string name="edit_workout_prepare_time">Prepare Time</string>
+    <string name="edit_workout_work">Work:</string>
+    <string name="edit_workout_work_time">Work Time</string>
+    <string name="edit_workout_rest">Rest:</string>
+    <string name="edit_workout_rest_time">Rest Time</string>
+    <string name="edit_workout_cycles">Cycles:</string>
+    <string name="edit_workout_cycles_count">Cycles Count</string>
+    <string name="edit_workout_sets">Sets:</string>
+    <string name="edit_workout_sets_count">Sets Count</string>
+    <string name="edit_workout_rest_between_sets">Rest between sets:</string>
+    <string name="edit_workout_rest_between_sets_time">Sets Rest</string>
+    <string name="edit_workout_cooldown">Cool Down:</string>
+    <string name="edit_workout_cooldown_time">Cool Down Time</string>
+    <string name="edit_workout_edit_text_hint">Add Description</string>
+    <string name="new_workout_success_message">Workout Saved!</string>
+    <string name="color_picker_title">Workout Color</string>
+    <string name="edit_workout_success_message">Workout Updated!</string>
+    <string name="delete_workout_alert_dialog_title">Delete Workout</string>
+    <string name="delete_workout_alert_dialog_message">Are you sure to delete this workout?</string>
+    <string name="delete_workout_alert_dialog_positive_button">Delete</string>
+    <string name="delete_workout_alert_dialog_negative_button">Cancel</string>
+    <string name="delete_workout_success_message">Workout Deleted!</string>
+    <string name="prepare_phase_title">Prepare</string>
+    <string name="work_phase_title">Work</string>
+    <string name="rest_phase_title">Rest</string>
+    <string name="rest_between_sets_phase_title">Sets Rest</string>
+    <string name="cooldown_phase_title">Cool Down</string>
+    <string name="exit_workout_alert_dialog_title">Exit Workout</string>
+    <string name="exit_workout_alert_dialog_message">Do you want to exit current workout?</string>
+    <string name="exit_workout_alert_dialog_positive_button">Yes</string>
+    <string name="exit_workout_alert_dialog_negative_button">No</string>
+
+
+
+
+
+
     <string name="appearance_header">Appearance</string>
     <string name="language_header">Language</string>
-
-    <!-- Appearance Preferences -->
     <string name="dark_theme_title">Use dark theme</string>
     <string name="font_size_title">Font size</string>
-
-    <!-- Language Preferences -->
     <string name="language_title">Language</string>
 </resources>

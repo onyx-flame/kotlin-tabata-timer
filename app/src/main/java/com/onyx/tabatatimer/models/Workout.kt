@@ -20,10 +20,10 @@ data class Workout(
     val workTime: Int,
     val restDescription: String?,
     val restTime: Int,
-    val cyclesRestDescription: String?,
-    val cyclesRestTime: Int,
-    val coolDownDescription: String?,
-    val coolDownTime: Int,
     val cycles: Int,
-    val sets: Int
+    val sets: Int,
+    val restBetweenSetsDescription: String?,
+    val restBetweenSetsTime: Int,
+    val coolDownDescription: String?,
+    val coolDownTime: Int
 ): Parcelable

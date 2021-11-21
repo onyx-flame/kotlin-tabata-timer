@@ -37,9 +37,9 @@ class TimerService: LifecycleService() {
         val currentPhaseTitle = MutableLiveData<String>()
         val currentPhaseTime = MutableLiveData<Int>()
         var isServiceStopped = true
+        var isTimerRunning = true
     }
 
-    private var isTimerRunning = false
     private lateinit var notificationManager: NotificationManagerCompat
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var tickPlayer: MediaPlayer
@@ -50,6 +50,7 @@ class TimerService: LifecycleService() {
         notificationManager = NotificationManagerCompat.from(this)
         tickPlayer = MediaPlayer.create(applicationContext, R.raw.tick_sound)
         successPlayer = MediaPlayer.create(applicationContext, R.raw.success_sound)
+        isTimerRunning = true
         timerEvent.postValue(TimerEvent.END)
     }
 
@@ -58,40 +59,48 @@ class TimerService: LifecycleService() {
             when(it.action) {
                 Constants.ACTION_START_SERVICE -> {
                     workout = it.extras?.getParcelable("workout")!!
-                    timerMap = WorkoutUtil.getWorkoutDetails(workout)
+                    timerMap = WorkoutUtil.getWorkoutDetails(workout, applicationContext)
                     startForegroundService()
                 }
                 Constants.ACTION_STOP_SERVICE -> {
                     stopService()
                 }
                 Constants.ACTION_START_PAUSE_TIMER -> {
-                    if (isTimerRunning) {
-                        isTimerRunning = false
-                        countDownTimer.cancel()
-                    } else {
-                        startTimer()
+                    if (!isServiceStopped) {
+                        if (isTimerRunning) {
+                            isTimerRunning = false
+                            countDownTimer.cancel()
+                        } else {
+                            startTimer()
+                        }
                     }
                 }
                 Constants.ACTION_NEXT_STEP_TIMER -> {
-                    if (currentStageNumber.value!! < timerMap.size) {
+                    if (!isServiceStopped) {
                         countDownTimer.cancel()
-                        updateWorkoutPhaseInfo(1)
+                        if (currentStageNumber.value!! < timerMap.size) {
+                            updateWorkoutPhaseInfo(1)
+                        } else {
+                            timerInMillis.value = 0L
+                            stopService()
+                        }
                         if (isTimerRunning) {
                             startTimer()
                         }
-                    } else {
-                        Toast.makeText(this, "Can't Next", Toast.LENGTH_SHORT).show()
                     }
                 }
                 Constants.ACTION_PREVIOUS_STEP_TIMER -> {
-                    if (currentStageNumber.value!! > 1) {
+                    if (!isServiceStopped) {
                         countDownTimer.cancel()
-                        updateWorkoutPhaseInfo(-1)
+                        if (currentStageNumber.value!! > 1) {
+                            updateWorkoutPhaseInfo(-1)
+                        } else {
+                            currentStageNumber.value = 1
+                            updateWorkoutPhaseInfo()
+                        }
                         if (isTimerRunning) {
                             startTimer()
                         }
-                    } else {
-                        Toast.makeText(this, "Can't Previous", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else -> Unit
@@ -129,6 +138,7 @@ class TimerService: LifecycleService() {
 
     private fun stopService() {
         isServiceStopped = true
+        isTimerRunning = false
         currentStageNumber.value = -1
         //resetValues()
         notificationManager.cancel(Constants.NOTIFICATION_ID)
@@ -205,11 +215,11 @@ class TimerService: LifecycleService() {
 
     private fun getPhaseTime(currentNumber: Int): Int {
         return when (timerMap[currentNumber - 1].phaseTitle) {
-            "Prepare" -> workout.prepareTime
-            "Work" -> workout.workTime
-            "Rest" -> workout.restTime
-            "Cycle Rest" -> workout.cyclesRestTime
-            "CoolDown" -> workout.coolDownTime
+            resources.getString(R.string.prepare_phase_title) -> workout.prepareTime
+            resources.getString(R.string.work_phase_title) -> workout.workTime
+            resources.getString(R.string.rest_phase_title) -> workout.restTime
+            resources.getString(R.string.rest_between_sets_phase_title) -> workout.restBetweenSetsTime
+            resources.getString(R.string.cooldown_phase_title) -> workout.coolDownTime
             else -> 0
         }
     }

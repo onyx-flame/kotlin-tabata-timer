@@ -19,7 +19,7 @@
             android:background="@color/white"
             android:elevation="@dimen/_8sdp"
             app:cardCornerRadius="@dimen/_5sdp"
-            android:layout_margin="@dimen/_16sdp">
+            android:layout_margin="@dimen/_8sdp">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -27,190 +27,314 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/_8sdp">
 
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_title"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
                     <EditText
-                        android:id="@+id/etTitleUpdate"
+                        android:id="@+id/etTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Title"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_edit_text_hint"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="textMultiLine" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_color"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvColorUpdate"
+                        android:id="@+id/cvColor"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         app:cardBackgroundColor="@color/backgroundWhite"
                         android:elevation="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_5sdp"
                         app:strokeColor="@color/black"
                         app:strokeWidth="@dimen/_1sdp"/>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_prepare"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
                     <EditText
-                        android:id="@+id/etPrepareTitleUpdate"
+                        android:id="@+id/etPrepareDescription"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Prepare Title"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_edit_text_hint"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="textMultiLine" />
 
                     <EditText
-                        android:id="@+id/etPrepareTimeUpdate"
+                        android:id="@+id/etPrepareTime"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Prepare Time"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_prepare_time"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="numberPassword" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_work"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
                     <EditText
-                        android:id="@+id/etWorkTitleUpdate"
+                        android:id="@+id/etWorkDescription"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Work Title"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_edit_text_hint"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="textMultiLine" />
 
                     <EditText
-                        android:id="@+id/etWorkTimeUpdate"
+                        android:id="@+id/etWorkTime"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Work Time"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_work_time"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="numberPassword" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_rest"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
                     <EditText
-                        android:id="@+id/etRestTitleUpdate"
+                        android:id="@+id/etRestDescription"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Rest Title"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_edit_text_hint"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="textMultiLine" />
 
                     <EditText
-                        android:id="@+id/etRestTimeUpdate"
+                        android:id="@+id/etRestTime"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Rest Time"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_rest_time"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="numberPassword" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_cycles"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
                     <EditText
-                        android:id="@+id/etCyclesRestTitleUpdate"
+                        android:id="@+id/etCyclesCount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Cycles Rest Title"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_cycles_count"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:inputType="numberPassword" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_sets"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
+                    <EditText
+                        android:id="@+id/etSetsCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/edit_workout_sets_count"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:inputType="numberPassword" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_rest_between_sets"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
+                    <EditText
+                        android:id="@+id/etRestBetweenSetsDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/edit_workout_edit_text_hint"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="textMultiLine" />
 
                     <EditText
-                        android:id="@+id/etCyclesRestTimeUpdate"
+                        android:id="@+id/etRestBetweenSetsTime"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Cycles Rest Time"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_rest_between_sets_time"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="numberPassword" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_workout_cooldown"
+                        android:textSize="@dimen/_20sdp"
+                        android:textAlignment="center"/>
+
                     <EditText
-                        android:id="@+id/etCoolDownTitleUpdate"
+                        android:id="@+id/etCoolDownDescription"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="CoolDown Title"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_edit_text_hint"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="textMultiLine" />
 
                     <EditText
-                        android:id="@+id/etCoolDownTimeUpdate"
+                        android:id="@+id/etCoolDownTime"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="CoolDown Time"
-                        android:gravity="start|top"
+                        android:hint="@string/edit_workout_cooldown_time"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:inputType="numberPassword" />
 
-                    <EditText
-                        android:id="@+id/etCyclesCountUpdate"
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:hint="Cycles Count"
-                        android:gravity="start|top"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:inputType="numberPassword" />
-
-                    <EditText
-                        android:id="@+id/etSetsCountUpdate"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:hint="Sets Count"
-                        android:gravity="start|top"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="@dimen/_15ssp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:inputType="numberPassword" />
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/teal_200"
+                        android:layout_margin="@dimen/_5sdp"/>
 
 
                 </LinearLayout>

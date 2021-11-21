@@ -1,7 +1,6 @@
 package com.onyx.tabatatimer.fragments
 
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -15,14 +14,13 @@ import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.databinding.FragmentUpdateWorkoutBinding
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
-import java.lang.String
 
 class UpdateWorkoutFragment : Fragment() {
 
     private var _binding: FragmentUpdateWorkoutBinding? = null
     private val binding get() = _binding!!
     private lateinit var workoutViewModel: WorkoutViewModel
-    private val args: UpdateWorkoutFragmentArgs by navArgs()
+    private val args: UpdateWorkoutFragmentArgs by navArgs<UpdateWorkoutFragmentArgs>()
     private lateinit var currentWorkout: Workout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +33,7 @@ class UpdateWorkoutFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentUpdateWorkoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,99 +42,100 @@ class UpdateWorkoutFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.update_workout_menu, menu)
+        (activity as MainActivity).supportActionBar?.title = resources.getString(R.string.update_workout_menu_toolbar_title)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         workoutViewModel = (activity as MainActivity).workoutViewModel
         binding.apply {
-            etPrepareTimeUpdate.transformationMethod = null
-            etWorkTimeUpdate.transformationMethod = null
-            etRestTimeUpdate.transformationMethod = null
-            etCyclesRestTimeUpdate.transformationMethod = null
-            etCoolDownTimeUpdate.transformationMethod = null
-            etCyclesCountUpdate.transformationMethod = null
-            etSetsCountUpdate.transformationMethod = null
+            etPrepareTime.transformationMethod = null
+            etWorkTime.transformationMethod = null
+            etRestTime.transformationMethod = null
+            etRestBetweenSetsTime.transformationMethod = null
+            etCoolDownTime.transformationMethod = null
+            etCyclesCount.transformationMethod = null
+            etSetsCount.transformationMethod = null
         }
 
-        binding.cvColorUpdate.setOnClickListener {
+        binding.cvColor.setOnClickListener {
             ColorPickerDialog
                 .Builder(requireContext())
-                .setTitle("Pick Workout Color")
+                .setTitle(resources.getString(R.string.color_picker_title))
                 .setColorShape(ColorShape.CIRCLE)
-                .setColorListener { color, colorHex ->
-                    binding.cvColorUpdate.setCardBackgroundColor(color)
+                .setColorListener { color, _ ->
+                    binding.cvColor.setCardBackgroundColor(color)
                 }
                 .show()
         }
 
         currentWorkout = args.workout!!
         binding.apply {
-            etTitleUpdate.setText(currentWorkout.title)
-            cvColorUpdate.setCardBackgroundColor(currentWorkout.color)
-            etPrepareTitleUpdate.setText(currentWorkout.prepareDescription)
-            etPrepareTimeUpdate.setText(currentWorkout.prepareTime.toString())
-            etWorkTitleUpdate.setText(currentWorkout.workDescription)
-            etWorkTimeUpdate.setText(currentWorkout.workTime.toString())
-            etRestTitleUpdate.setText(currentWorkout.restDescription)
-            etRestTimeUpdate.setText(currentWorkout.restTime.toString())
-            etCyclesRestTitleUpdate.setText(currentWorkout.cyclesRestDescription)
-            etCyclesRestTimeUpdate.setText(currentWorkout.cyclesRestTime.toString())
-            etCoolDownTitleUpdate.setText(currentWorkout.coolDownDescription)
-            etCoolDownTimeUpdate.setText(currentWorkout.coolDownTime.toString())
-            etCyclesCountUpdate.setText(currentWorkout.cycles.toString())
-            etSetsCountUpdate.setText(currentWorkout.sets.toString())
+            etTitle.setText(currentWorkout.title)
+            cvColor.setCardBackgroundColor(currentWorkout.color)
+            etPrepareDescription.setText(currentWorkout.prepareDescription)
+            etPrepareTime.setText(currentWorkout.prepareTime.toString())
+            etWorkDescription.setText(currentWorkout.workDescription)
+            etWorkTime.setText(currentWorkout.workTime.toString())
+            etRestDescription.setText(currentWorkout.restDescription)
+            etRestTime.setText(currentWorkout.restTime.toString())
+            etRestBetweenSetsDescription.setText(currentWorkout.restBetweenSetsDescription)
+            etRestBetweenSetsTime.setText(currentWorkout.restBetweenSetsTime.toString())
+            etCoolDownDescription.setText(currentWorkout.coolDownDescription)
+            etCoolDownTime.setText(currentWorkout.coolDownTime.toString())
+            etCyclesCount.setText(currentWorkout.cycles.toString())
+            etSetsCount.setText(currentWorkout.sets.toString())
         }
         binding.fabUpdate.setOnClickListener {
-            val workoutTitle = binding.etTitleUpdate.text.toString()
-            val workoutColor = binding.cvColorUpdate.cardBackgroundColor.defaultColor
-            val workoutPrepareTitle = binding.etPrepareTitleUpdate.text.toString()
-            val workoutPrepareTime = binding.etPrepareTimeUpdate.text.toString().toInt()
-            val workoutWorkTitle = binding.etWorkTitleUpdate.text.toString()
-            val workoutWorkTime = binding.etWorkTimeUpdate.text.toString().toInt()
-            val workoutRestTitle = binding.etRestTitleUpdate.text.toString()
-            val workoutRestTime = binding.etRestTimeUpdate.text.toString().toInt()
-            val workoutCyclesRestTitle = binding.etCyclesRestTitleUpdate.text.toString()
-            val workoutCyclesRestTime = binding.etCyclesRestTimeUpdate.text.toString().toInt()
-            val workoutCoolDownTitle = binding.etCoolDownTitleUpdate.text.toString()
-            val workoutCoolDownTime = binding.etCoolDownTimeUpdate.text.toString().toInt()
-            val workoutCyclesCount = binding.etCyclesCountUpdate.text.toString().toInt()
-            val workoutSetsCount = binding.etSetsCountUpdate    .text.toString().toInt()
+            val workoutTitle = binding.etTitle.text.toString()
+            val workoutColor = binding.cvColor.cardBackgroundColor.defaultColor
+            val workoutPrepareDescription = binding.etPrepareDescription.text.toString()
+            val workoutPrepareTime = binding.etPrepareTime.text.toString().toInt()
+            val workoutWorkDescription = binding.etWorkDescription.text.toString()
+            val workoutWorkTime = binding.etWorkTime.text.toString().toInt()
+            val workoutRestDescription = binding.etRestDescription.text.toString()
+            val workoutRestTime = binding.etRestTime.text.toString().toInt()
+            val workoutRestBetweenSetsDescription = binding.etRestBetweenSetsDescription.text.toString()
+            val workoutRestBetweenSets = binding.etRestBetweenSetsTime.text.toString().toInt()
+            val workoutCoolDownDescription = binding.etCoolDownDescription.text.toString()
+            val workoutCoolDownTime = binding.etCoolDownTime.text.toString().toInt()
+            val workoutCyclesCount = binding.etCyclesCount.text.toString().toInt()
+            val workoutSetsCount = binding.etSetsCount.text.toString().toInt()
 
             val workout = Workout(
                 currentWorkout.id,
                 workoutTitle,
                 workoutColor,
-                workoutPrepareTitle,
+                workoutPrepareDescription,
                 workoutPrepareTime,
-                workoutWorkTitle,
+                workoutWorkDescription,
                 workoutWorkTime,
-                workoutRestTitle,
+                workoutRestDescription,
                 workoutRestTime,
-                workoutCyclesRestTitle,
-                workoutCyclesRestTime,
-                workoutCoolDownTitle,
-                workoutCoolDownTime,
                 workoutCyclesCount,
-                workoutSetsCount
+                workoutSetsCount,
+                workoutRestBetweenSetsDescription,
+                workoutRestBetweenSets,
+                workoutCoolDownDescription,
+                workoutCoolDownTime
             )
 
             workoutViewModel.updateWorkout(workout)
-            Snackbar.make(view, "Workout Updated!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, resources.getString(R.string.edit_workout_success_message), Snackbar.LENGTH_SHORT).show()
             view.findNavController().navigate(R.id.action_updateWorkoutFragment_to_homeFragment)
         }
     }
 
     private fun deleteWorkout() {
         AlertDialog.Builder(activity).apply {
-            setTitle("Delete Workout")
-            setMessage("Are you sure to delete this workout?")
-            setPositiveButton("Delete") { _,_ ->
+            setTitle(resources.getString(R.string.delete_workout_alert_dialog_title))
+            setMessage(resources.getString(R.string.delete_workout_alert_dialog_message))
+            setPositiveButton(resources.getString(R.string.delete_workout_alert_dialog_positive_button)) { _,_ ->
                 workoutViewModel.deleteWorkout(currentWorkout)
-                Snackbar.make(requireView(), "Workout deleted!", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), resources.getString(R.string.delete_workout_success_message), Snackbar.LENGTH_SHORT).show()
                 view?.findNavController()?.navigate(R.id.action_updateWorkoutFragment_to_homeFragment)
             }
-            setNegativeButton("Cancel", null)
+            setNegativeButton(resources.getString(R.string.delete_workout_alert_dialog_negative_button), null)
         }.create().show()
     }
 

@@ -37,7 +37,7 @@
             android:id="@+id/tvNoWorkouts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="No Workouts!"
+            android:text="@string/no_workouts_text"
             android:gravity="center"
             android:padding="@dimen/_50sdp"
             android:textColor="@color/black"
@@ -57,7 +57,7 @@
         android:background="@drawable/background"
         android:queryBackground="@android:color/transparent"
         android:theme="@style/SearchViewStyle"
-        android:queryHint="Search Something"
+        android:queryHint="@string/search_view_hint"
         android:iconifiedByDefault="false"
         android:focusable="false"
         />

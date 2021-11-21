@@ -1,8 +1,6 @@
 package com.onyx.tabatatimer.fragments
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -14,7 +12,6 @@ import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.databinding.FragmentNewWorkoutBinding
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
-import java.lang.String
 
 class NewWorkoutFragment : Fragment() {
 
@@ -33,7 +30,7 @@ class NewWorkoutFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNewWorkoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -42,6 +39,7 @@ class NewWorkoutFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.new_workout_menu, menu)
+        (activity as MainActivity).supportActionBar?.title = resources.getString(R.string.new_workout_menu_toolbar_title)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,7 +52,7 @@ class NewWorkoutFragment : Fragment() {
             etPrepareTime.transformationMethod = null
             etWorkTime.transformationMethod = null
             etRestTime.transformationMethod = null
-            etCyclesRestTime.transformationMethod = null
+            etRestBetweenSetsTime.transformationMethod = null
             etCoolDownTime.transformationMethod = null
             etCyclesCount.transformationMethod = null
             etSetsCount.transformationMethod = null
@@ -62,9 +60,9 @@ class NewWorkoutFragment : Fragment() {
         binding.cvColor.setOnClickListener {
             ColorPickerDialog
                 .Builder(requireContext())
-                .setTitle("Pick Workout Color")
+                .setTitle(resources.getString(R.string.color_picker_title))
                 .setColorShape(ColorShape.CIRCLE)
-                .setColorListener { color, colorHex ->
+                .setColorListener { color, _ ->
                     binding.cvColor.setCardBackgroundColor(color)
                 }
                 .show()
@@ -74,15 +72,15 @@ class NewWorkoutFragment : Fragment() {
     private fun saveWorkout(view: View) {
         val workoutTitle = binding.etTitle.text.toString()
         val workoutColor = binding.cvColor.cardBackgroundColor.defaultColor
-        val workoutPrepareTitle = binding.etPrepareTitle.text.toString()
+        val workoutPrepareDescription = binding.etPrepareDescription.text.toString()
         val workoutPrepareTime = binding.etPrepareTime.text.toString().toInt()
-        val workoutWorkTitle = binding.etWorkTitle.text.toString()
+        val workoutWorkDescription = binding.etWorkDescription.text.toString()
         val workoutWorkTime = binding.etWorkTime.text.toString().toInt()
-        val workoutRestTitle = binding.etRestTitle.text.toString()
+        val workoutRestDescription = binding.etRestDescription.text.toString()
         val workoutRestTime = binding.etRestTime.text.toString().toInt()
-        val workoutCyclesRestTitle = binding.etCyclesRestTitle.text.toString()
-        val workoutCyclesRestTime = binding.etCyclesRestTime.text.toString().toInt()
-        val workoutCoolDownTitle = binding.etCoolDownTitle.text.toString()
+        val workoutRestBetweenSetsDescription = binding.etRestBetweenSetsDescription.text.toString()
+        val workoutRestBetweenSets = binding.etRestBetweenSetsTime.text.toString().toInt()
+        val workoutCoolDownDescription = binding.etCoolDownDescription.text.toString()
         val workoutCoolDownTime = binding.etCoolDownTime.text.toString().toInt()
         val workoutCyclesCount = binding.etCyclesCount.text.toString().toInt()
         val workoutSetsCount = binding.etSetsCount.text.toString().toInt()
@@ -91,22 +89,22 @@ class NewWorkoutFragment : Fragment() {
             0,
             workoutTitle,
             workoutColor,
-            workoutPrepareTitle,
+            workoutPrepareDescription,
             workoutPrepareTime,
-            workoutWorkTitle,
+            workoutWorkDescription,
             workoutWorkTime,
-            workoutRestTitle,
+            workoutRestDescription,
             workoutRestTime,
-            workoutCyclesRestTitle,
-            workoutCyclesRestTime,
-            workoutCoolDownTitle,
-            workoutCoolDownTime,
             workoutCyclesCount,
-            workoutSetsCount
+            workoutSetsCount,
+            workoutRestBetweenSetsDescription,
+            workoutRestBetweenSets,
+            workoutCoolDownDescription,
+            workoutCoolDownTime
         )
 
         workoutViewModel.addWorkout(workout)
-        Snackbar.make(view, "Workout saved!",Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view, resources.getString(R.string.new_workout_success_message),Snackbar.LENGTH_SHORT).show()
         view.findNavController().navigate(R.id.action_newWorkoutFragment_to_homeFragment)
 
     }

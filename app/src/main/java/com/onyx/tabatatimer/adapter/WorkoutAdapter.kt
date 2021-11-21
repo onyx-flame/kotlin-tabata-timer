@@ -11,6 +11,7 @@ import com.onyx.tabatatimer.databinding.WorkoutLayoutAdapterBinding
 import com.onyx.tabatatimer.fragments.HomeFragmentDirections
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.utils.WorkoutUtil
+import com.onyx.tabatatimer.R
 
 class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
 
@@ -37,19 +38,40 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
 
     override fun onBindViewHolder(holder: WorkoutViewHolder, position: Int) {
         val currentWorkout = differ.currentList[position]
-        holder.itemBinding.cvWorkout.setCardBackgroundColor(currentWorkout.color)
-        holder.itemBinding.tvWorkoutTitle.text = currentWorkout.title
-        holder.itemBinding.tvWorkoutDetails.text =
-            "Prepare: ${currentWorkout.prepareTime} sec\n" +
-            "Work: ${currentWorkout.workTime} sec\n" +
-            "Rest: ${currentWorkout.restTime} sec\n" +
-            "Cycles Rest: ${currentWorkout.cyclesRestTime} sec\n" +
-            "CoolDown: ${currentWorkout.coolDownTime} sec\n" +
-            "Cycles: ${currentWorkout.cycles}\n" +
-            "Sets: ${currentWorkout.sets}"
-        val time = WorkoutUtil.getWorkoutTime(currentWorkout)
-        holder.itemBinding.tvWorkoutInfo.text = "${WorkoutUtil.getWorkoutStepsCount(currentWorkout)} intervals | ${getFormattedWorkoutTime(time)}"
+        holder.itemBinding.apply {
+            cvWorkout.setCardBackgroundColor(currentWorkout.color)
+            val textColor = WorkoutUtil.getContrastYIQ(currentWorkout.color)
+            tvWorkoutTitle.setTextColor(textColor)
+            tvWorkoutDetails.setTextColor(textColor)
+            tvWorkoutInfo.setTextColor(textColor)
+            ivStartWorkout.setColorFilter(textColor)
+            ivUpdateWorkout.setColorFilter(textColor)
+            tvWorkoutTitle.text = currentWorkout.title
+            tvWorkoutDetails.text =
+                String.format(
+                    root.resources.getString(R.string.workout_layout_adapter_details_template,
+                        currentWorkout.prepareTime,
+                        currentWorkout.workTime,
+                        currentWorkout.restTime,
+                        currentWorkout.cycles,
+                        currentWorkout.sets,
+                        currentWorkout.restBetweenSetsTime,
+                        currentWorkout.coolDownTime))
+            tvWorkoutInfo.text =
+                String.format(
+                    root.resources.getString(R.string.workout_layout_adapter_info_template,
+                        WorkoutUtil.getWorkoutStepsCount(currentWorkout),
+                        getFormattedWorkoutTime(WorkoutUtil.getWorkoutTime(currentWorkout))))
 
+            ivStartWorkout.setOnClickListener { view ->
+                val direction = HomeFragmentDirections.actionHomeFragmentToTimerActivity(currentWorkout)
+                view.findNavController().navigate(direction)
+            }
+            ivUpdateWorkout.setOnClickListener { view ->
+                val direction = HomeFragmentDirections.actionHomeFragmentToUpdateWorkoutFragment(currentWorkout)
+                view.findNavController().navigate(direction)
+            }
+        }
         holder.itemView.setOnClickListener {
             if (holder.itemBinding.tvWorkoutDetails.visibility == View.GONE) {
                 holder.itemBinding.tvWorkoutDetails.visibility = View.VISIBLE
@@ -58,14 +80,7 @@ class WorkoutAdapter: RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
             }
 
         }
-        holder.itemBinding.startWorkout.setOnClickListener { view ->
-            val direction = HomeFragmentDirections.actionHomeFragmentToTimerActivity(currentWorkout)
-            view.findNavController().navigate(direction)
-        }
-        holder.itemBinding.updateWorkout.setOnClickListener { view ->
-            val direction = HomeFragmentDirections.actionHomeFragmentToUpdateWorkoutFragment(currentWorkout)
-            view.findNavController().navigate(direction)
-        }
+
     }
 
     override fun getItemCount(): Int {

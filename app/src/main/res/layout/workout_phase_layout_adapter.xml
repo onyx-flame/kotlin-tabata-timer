@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mcvRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/_4sdp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/_5sdp"
-    app:cardElevation="@dimen/_8sdp">
+    app:cardElevation="@dimen/_8sdp"
+    app:strokeColor="@color/teal_200"
+    app:strokeWidth="@dimen/_1sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,14 +23,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center"
-            android:text="123"
+            tools:text="123"
             android:textColor="@color/black"
             android:textSize="@dimen/_30ssp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -34,7 +38,7 @@
                 android:id="@+id/tvPhaseTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Phase Title"
+                tools:text="Phase Title"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
@@ -45,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:maxHeight="@dimen/_170sdp"
-                android:text="Phase Description..."
+                tools:text="Phase Description..."
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:ellipsize="end"
@@ -56,4 +60,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

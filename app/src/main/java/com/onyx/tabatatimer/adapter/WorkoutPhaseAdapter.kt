@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.onyx.tabatatimer.databinding.WorkoutPhaseLayoutAdapterBinding
-import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.models.WorkoutPhase
+import com.onyx.tabatatimer.utils.WorkoutUtil
 
 class WorkoutPhaseAdapter: RecyclerView.Adapter<WorkoutPhaseAdapter.WorkoutPhaseViewHolder>() {
 
@@ -35,11 +35,19 @@ class WorkoutPhaseAdapter: RecyclerView.Adapter<WorkoutPhaseAdapter.WorkoutPhase
 
     override fun onBindViewHolder(holder: WorkoutPhaseViewHolder, position: Int) {
         val currentWorkoutPhase = differ.currentList[position]
-        holder.itemBinding.tvPhaseNumber.text = currentWorkoutPhase.number.toString()
-        holder.itemBinding.tvPhaseTitle.text = currentWorkoutPhase.phaseTitle
+        holder.itemBinding.apply {
+            mcvRoot.setCardBackgroundColor(currentWorkoutPhase.color)
+            tvPhaseNumber.text = currentWorkoutPhase.number.toString()
+            tvPhaseTitle.text = currentWorkoutPhase.phaseTitle
+            val elementsColor = WorkoutUtil.getContrastYIQ(currentWorkoutPhase.color)
+            mcvRoot.strokeColor = elementsColor
+            tvPhaseNumber.setTextColor(elementsColor)
+            tvPhaseDescription.setTextColor(elementsColor)
+            tvPhaseTitle.setTextColor(elementsColor)
+        }
         val description = currentWorkoutPhase.phaseDescription
         holder.itemBinding.tvPhaseDescription.text = description
-        if (description.isNullOrEmpty()) {
+        if (description.isEmpty()) {
             holder.itemBinding.tvPhaseDescription.visibility = View.GONE
         }
     }

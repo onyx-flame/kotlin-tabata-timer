@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WorkoutPhase(
     val number: Int,
+    val color: Int,
     val phaseTitle: String,
     val phaseDescription: String
 ): Parcelable

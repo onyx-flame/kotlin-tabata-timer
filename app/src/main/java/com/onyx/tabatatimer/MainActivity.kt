@@ -32,7 +32,6 @@ class MainActivity : LocaleAwareCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         sharedPreferences = getSharedPreferences(CONTEXT_NAME, Context.MODE_PRIVATE)
         setContentView(binding.root)
-        updateAppFontSize()
         setSupportActionBar(binding.toolbar)
         setUpViewModel()
 
@@ -61,7 +60,6 @@ class MainActivity : LocaleAwareCompatActivity() {
             }
         }
         updateAppFontSize()
-        updateAppTheme()
     }
 
     private fun updateAppFontSize() {

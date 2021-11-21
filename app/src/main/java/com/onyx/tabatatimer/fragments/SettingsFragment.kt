@@ -12,6 +12,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
         setHasOptionsMenu(true)
+        (activity as MainActivity).supportActionBar?.title = resources.getString(R.string.settings_menu_toolbar_title)
         (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }

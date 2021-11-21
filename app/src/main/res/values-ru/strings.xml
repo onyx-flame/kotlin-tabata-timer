@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Табата Таймер</string>
 
-    <!-- Preference Titles -->
     <string name="appearance_header">Внешний вид</string>
     <string name="language_header">Язык</string>
-
-    <!-- Appearance Preferences -->
     <string name="dark_theme_title">Использовать темную тему</string>
     <string name="font_size_title">Размер шрифта</string>
-
-    <!-- Language Preferences -->
     <string name="language_title">Язык</string>
+    <string name="home_menu_toolbar_title">Табата Таймер</string>
+    <string name="update_workout_menu_toolbar_title">Изменить тренировку</string>
+    <string name="new_workout_menu_toolbar_title">Новая тренировка</string>
+    <string name="settings_menu_toolbar_title">Настройки</string>
+    <string name="search_view_hint">Поиск тренировок</string>
+    <string name="no_workouts_text">Нет тренировок!</string>
+    <string name="workout_layout_adapter_info_template">%1$d интервалов | %2$s</string>
+    <string name="workout_layout_adapter_details_template">"Подготовка: %1$d сек\nРабота: %2$d сек\nОтдых: %3$d сек\nЦиклы: %4$d\nСеты: %5$d\nОтдых между сетами: %6$d сек\nЗаминка: %7$d сек\n"</string>
+    <string name="edit_workout_title">Название:</string>
+    <string name="edit_workout_color">Цвет:</string>
+    <string name="edit_workout_prepare">Подготовка:</string>
+    <string name="edit_workout_prepare_time">Время подготовки</string>
+    <string name="edit_workout_work">Работа:</string>
+    <string name="edit_workout_work_time">Время работы</string>
+    <string name="edit_workout_rest">Отдых:</string>
+    <string name="edit_workout_rest_time">Время отдыха</string>
+    <string name="edit_workout_cycles">Циклы:</string>
+    <string name="edit_workout_cycles_count">Количество циклов</string>
+    <string name="edit_workout_sets">Сеты:</string>
+    <string name="edit_workout_sets_count">Количество сетов</string>
+    <string name="edit_workout_rest_between_sets">Отдых между сетами:</string>
+    <string name="edit_workout_rest_between_sets_time">Время отдыха</string>
+    <string name="edit_workout_cooldown">Заминка:</string>
+    <string name="edit_workout_cooldown_time">Время заминки:</string>
+    <string name="edit_workout_edit_text_hint">Добавить описание</string>
+    <string name="new_workout_success_message">Тренировка сохранена!</string>
+    <string name="color_picker_title">Цвет тренировки</string>
+    <string name="edit_workout_success_message">Тренировка обновлена!</string>
+    <string name="delete_workout_alert_dialog_title">Удалить тренировку</string>
+    <string name="delete_workout_alert_dialog_message">Вы точно хотите удалить эту тренировку?</string>
+    <string name="delete_workout_alert_dialog_positive_button">Удалить</string>
+    <string name="delete_workout_alert_dialog_negative_button">Отмена</string>
+    <string name="delete_workout_success_message">Тренировка удалена!</string>
+    <string name="prepare_phase_title">Подготовка</string>
+    <string name="work_phase_title">Работа</string>
+    <string name="rest_phase_title">Отдых</string>
+    <string name="rest_between_sets_phase_title">Сет-отдых</string>
+    <string name="cooldown_phase_title">Заминка</string>
+    <string name="exit_workout_alert_dialog_title">Покинуть тренировку</string>
+    <string name="exit_workout_alert_dialog_message">Вы точно хотите покинуть текущую тренировку?</string>
+    <string name="exit_workout_alert_dialog_positive_button">Выйти</string>
+    <string name="exit_workout_alert_dialog_negative_button">Отмена</string>
 
 </resources>

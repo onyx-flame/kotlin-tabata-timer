@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvWorkout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,27 +24,27 @@
 
             <TextView
                 android:id="@+id/tvWorkoutTitle"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="200"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="Workout Title"
+                tools:text="Workout Title"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_25ssp"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/startWorkout"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:id="@+id/ivStartWorkout"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:src="@drawable/ic_play"
                 app:tint="@color/black" />
 
             <ImageView
-                android:id="@+id/updateWorkout"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:id="@+id/ivUpdateWorkout"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:src="@drawable/ic_edit"
                 app:tint="@color/black" />
 
@@ -58,7 +59,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:ellipsize="end"
             android:maxHeight="@dimen/_170sdp"
-            android:text="xx intervals | 99:99"
+            tools:text="xx intervals | 99:99"
             android:textColor="@color/hintColor"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
@@ -72,7 +73,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:ellipsize="end"
             android:maxHeight="@dimen/_170sdp"
-            android:text="xx intervals | 99:99"
+            tools:text="xx intervals | 99:99"
             android:textColor="@color/hintColor"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold" />

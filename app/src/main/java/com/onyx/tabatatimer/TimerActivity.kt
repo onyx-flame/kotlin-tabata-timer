@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.navArgs
@@ -42,37 +43,72 @@ class TimerActivity : LocaleAwareCompatActivity() {
         } else {
             args.workout!!
         }
-        binding.tvPhase.text = workout.title
 
-        binding.fabStartPause.setOnClickListener {
-            if (TimerService.isServiceStopped)
-                sendCommandToService(Constants.ACTION_START_SERVICE)
-            else
-            togglePlayPause()
-        }
-
-        binding.fabNext.setOnClickListener {
-            sendCommandToService(Constants.ACTION_NEXT_STEP_TIMER)
-        }
-
-        binding.fabPrevious.setOnClickListener {
-            sendCommandToService(Constants.ACTION_PREVIOUS_STEP_TIMER)
+        binding.apply {
+            clRoot.setBackgroundColor(workout.color)
+            val elementsColor = WorkoutUtil.getContrastYIQ(workout.color)
+            ivExit.setColorFilter(elementsColor)
+            tvPhase.setTextColor(elementsColor)
+            ivPlay.setColorFilter(elementsColor)
+            ivPause.setColorFilter(elementsColor)
+            tvTimer.setTextColor(elementsColor)
+            ivPrevious.setColorFilter(elementsColor)
+            tvStage.setTextColor(elementsColor)
+            ivNext.setColorFilter(elementsColor)
+            cpi.setIndicatorColor(elementsColor)
+            cpi.setBackgroundColor(workout.color)
+            tvPhase.text = workout.title
+            ivPlay.setOnClickListener {
+                if (!TimerService.isServiceStopped) {
+                    togglePlayPause()
+                }
+            }
+            ivPause.setOnClickListener {
+                if (!TimerService.isServiceStopped) {
+                    togglePlayPause()
+                }
+            }
+            ivExit.setOnClickListener {
+                exitWorkout()
+            }
+            ivNext.setOnClickListener {
+                sendCommandToService(Constants.ACTION_NEXT_STEP_TIMER)
+            }
+            ivPrevious.setOnClickListener {
+                sendCommandToService(Constants.ACTION_PREVIOUS_STEP_TIMER)
+            }
         }
 
         setObservers()
         if (TimerService.isServiceStopped) {
-            timerMap = WorkoutUtil.getWorkoutDetails(workout)
+            timerMap = WorkoutUtil.getWorkoutDetails(workout, applicationContext)
             sendCommandToService(Constants.ACTION_START_SERVICE)
+            TimerService.isTimerRunning = true
         } else {
             timerMap = TimerService.timerMap
+
         }
         setUpRecyclerView()
+        if (!TimerService.isTimerRunning) {
+            binding.ivPlay.visibility = View.VISIBLE
+            binding.ivPause.visibility = View.GONE
+        } else {
+            binding.ivPlay.visibility = View.GONE
+            binding.ivPause.visibility = View.VISIBLE
+        }
 
     }
 
     private fun togglePlayPause() {
-        if (isTimerRunning) {
+        if (!TimerService.isServiceStopped) {
             sendCommandToService(Constants.ACTION_START_PAUSE_TIMER)
+            if (binding.ivPlay.visibility == View.GONE) {
+                binding.ivPlay.visibility = View.VISIBLE
+                binding.ivPause.visibility = View.GONE
+            } else {
+                binding.ivPlay.visibility = View.GONE
+                binding.ivPause.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -81,12 +117,12 @@ class TimerActivity : LocaleAwareCompatActivity() {
             when (it) {
                 is TimerEvent.START -> {
                     isTimerRunning = true
-                    binding.fabStartPause.setImageResource(R.drawable.ic_pause)
+                    //binding.ivStartPause.setImageResource(R.drawable.ic_pause)
                     Unit
                 }
                 is TimerEvent.END -> {
                     isTimerRunning = false
-                    binding.fabStartPause.setImageResource(R.drawable.ic_play)
+                    //binding.ivStartPause.setImageResource(R.drawable.ic_play)
                     Unit
                 }
             }
@@ -127,18 +163,24 @@ class TimerActivity : LocaleAwareCompatActivity() {
     }
 
     override fun onBackPressed() {
+        exitWorkout()
+        //super.onBackPressed()
+    }
+
+    private fun exitWorkout() {
         AlertDialog.Builder(this).apply {
-            setTitle("Exit Workout")
-            setMessage("Do you want to exit current workout?")
-            setPositiveButton("Yes") { _,_ ->
+            setTitle(resources.getString(R.string.exit_workout_alert_dialog_title))
+            setMessage(resources.getString(R.string.exit_workout_alert_dialog_message))
+            setPositiveButton(resources.getString(R.string.exit_workout_alert_dialog_positive_button)) { _,_ ->
                 val intent = Intent(this@TimerActivity,MainActivity::class.java)
                 startActivity(intent)
                 finish()
-                sendCommandToService(Constants.ACTION_STOP_SERVICE)
+                if (!TimerService.isServiceStopped) {
+                    sendCommandToService(Constants.ACTION_STOP_SERVICE)
+                }
             }
-            setNegativeButton("No", null)
+            setNegativeButton(resources.getString(R.string.exit_workout_alert_dialog_negative_button), null)
         }.create().show()
-        //super.onBackPressed()
     }
 
     private fun setUpRecyclerView() {

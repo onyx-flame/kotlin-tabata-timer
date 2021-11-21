@@ -3,7 +3,6 @@ package com.onyx.tabatatimer.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.onyx.tabatatimer.MainActivity
@@ -30,7 +29,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,6 +38,7 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.home_menu, menu)
+        (activity as MainActivity).supportActionBar?.title = resources.getString(R.string.home_menu_toolbar_title)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
