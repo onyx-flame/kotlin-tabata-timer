@@ -35,7 +35,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -43,7 +43,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_title"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etTitle"
@@ -52,7 +53,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_edit_text_hint"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -61,7 +62,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -69,7 +70,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_color"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cvColor"
@@ -85,7 +87,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
 
@@ -94,7 +96,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_prepare"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etPrepareDescription"
@@ -103,7 +106,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_edit_text_hint"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -116,7 +119,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_prepare_time"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -125,7 +128,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -133,7 +136,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_work"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etWorkDescription"
@@ -142,7 +146,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_edit_text_hint"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -155,7 +159,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_work_time"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -164,7 +168,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -172,7 +176,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_rest"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etRestDescription"
@@ -181,7 +186,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_edit_text_hint"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -194,7 +199,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_rest_time"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -203,7 +208,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -211,7 +216,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_cycles"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etCyclesCount"
@@ -220,7 +226,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_cycles_count"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -229,7 +235,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -237,7 +243,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_sets"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etSetsCount"
@@ -246,7 +253,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_sets_count"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -255,7 +262,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -263,7 +270,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_rest_between_sets"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etRestBetweenSetsDescription"
@@ -272,7 +280,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_edit_text_hint"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -285,7 +293,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_rest_between_sets_time"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -294,7 +302,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
                     <TextView
@@ -302,7 +310,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_workout_cooldown"
                         android:textSize="@dimen/_20sdp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"/>
 
                     <EditText
                         android:id="@+id/etCoolDownDescription"
@@ -311,7 +320,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_edit_text_hint"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -324,7 +333,7 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/edit_workout_cooldown_time"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="@dimen/_15ssp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -333,7 +342,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/teal_200"
+                        android:background="@color/colorPrimaryVariant"
                         android:layout_margin="@dimen/_5sdp"/>
 
 

@@ -8,11 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorPrimary">#9432c0</color>
-    <color name="colorPrimaryVariant">#6b278a</color>
-    <color name="cardBackground">@color/white</color>
-    <color name="backgroundWhite">#d1cbcb</color>
-    <color name="queryHintColor">#928e8e</color>
+    <color name="colorPrimary">@color/purple_500</color>
+    <color name="colorPrimaryVariant">@color/purple_700</color>
+    <color name="cardBackground">#404040</color>
+    <color name="backgroundWhite">#545252</color>
+    <color name="queryHintColor">@color/white</color>
     <color name="hintColor">#928e8e</color>
-    <color name="textColor">@color/black</color>
+    <color name="textColor">@color/white</color>
+
 </resources>

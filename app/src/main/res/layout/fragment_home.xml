@@ -16,12 +16,14 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_32sdp"
         android:clickable="true"
+        android:focusable="true"
         android:backgroundTint="@color/colorPrimary"
-        android:tintMode="@color/white"
+        android:tintMode="@color/cardBackground"
         app:borderWidth="0dp"
         android:src="@drawable/ic_add" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvNoWorkouts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_32sdp"
@@ -29,21 +31,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         android:elevation="@dimen/_10sdp"
         app:cardCornerRadius="@dimen/_10sdp"
-        android:backgroundTint="@color/white">
+        app:cardBackgroundColor="@color/cardBackground">
 
         <TextView
-            android:id="@+id/tvNoWorkouts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/no_workouts_text"
             android:gravity="center"
             android:padding="@dimen/_50sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_18ssp"/>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <SearchView
         android:id="@+id/searchView"
@@ -71,5 +73,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorPrimary"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

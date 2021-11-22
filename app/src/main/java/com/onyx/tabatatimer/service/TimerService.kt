@@ -21,6 +21,8 @@ import com.onyx.tabatatimer.models.WorkoutPhase
 import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
 import com.onyx.tabatatimer.utils.WorkoutUtil
+import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
+import com.zeugmasolutions.localehelper.Locales
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,6 +1,7 @@
 package com.onyx.tabatatimer.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -74,6 +75,11 @@ class HomeFragment : Fragment() {
         activity?.let {
             workoutViewModel.getWorkouts().observe(viewLifecycleOwner, { workouts ->
                 workoutAdapter.differ.submitList(workouts)
+                binding.apply {
+                    progressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                    mcvNoWorkouts.visibility = View.GONE
+                }
                 updateUI(workouts)
             })
         }
@@ -81,11 +87,17 @@ class HomeFragment : Fragment() {
 
     private fun updateUI(workouts: List<Workout>) {
         if (workouts.isNotEmpty()) {
-            binding.recyclerView.visibility = View.VISIBLE
-            binding.tvNoWorkouts.visibility = View.GONE
+            binding.apply {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+                mcvNoWorkouts.visibility = View.GONE
+            }
         } else {
-            binding.recyclerView.visibility = View.GONE
-            binding.tvNoWorkouts.visibility = View.VISIBLE
+            binding.apply {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+                mcvNoWorkouts.visibility = View.VISIBLE
+            }
         }
     }
 

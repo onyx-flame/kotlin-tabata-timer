@@ -1,5 +1,6 @@
 package com.onyx.tabatatimer
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,13 +11,17 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.onyx.tabatatimer.databinding.ActivityMainBinding
 import com.onyx.tabatatimer.db.WorkoutDatabase
 import com.onyx.tabatatimer.fragments.SettingsFragment
 import com.onyx.tabatatimer.repository.WorkoutRepository
+import com.onyx.tabatatimer.service.TimerService
+import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModelProviderFactory
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
 import com.zeugmasolutions.localehelper.Locales
 import java.util.*
 
@@ -34,6 +39,15 @@ class MainActivity : LocaleAwareCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         setUpViewModel()
+        val sharedPreferencess = getSharedPreferences("com.onyx.tabatatimer_preferences", Context.MODE_PRIVATE)
+        when (sharedPreferencess.getString("language", "en")) {
+            "en" -> {
+                setLocale(applicationContext, Locales.English)
+            }
+            "ru" -> {
+                setLocale(applicationContext, Locales.Russian)
+            }
+        }
 
     }
 
@@ -48,9 +62,12 @@ class MainActivity : LocaleAwareCompatActivity() {
                 "font_size" -> {
                     updateAppFontSize()
                     try {
-                        findNavController(R.id.fragmentContainerView).navigate(R.id.action_settingsFragment_to_settingsFragment)
+                        findNavController(R.id.navigation_header_container).navigate(R.id.action_settingsFragment_to_settingsFragment)
                     } catch (e: Exception) {
-                        findNavController(R.id.fragmentContainerView).navigate(R.id.action_homeFragment_to_settingsFragment)
+                        e.printStackTrace()
+                        try {
+                            findNavController(R.id.navigation_header_container).navigate(R.id.action_settingsFragment_to_settingsFragment)
+                        } catch (e: Exception) {}
                     }
 
                 }
@@ -115,4 +132,16 @@ class MainActivity : LocaleAwareCompatActivity() {
         ).get(WorkoutViewModel::class.java)
 
     }
+
+    override fun onBackPressed() {
+        AlertDialog.Builder(this).apply {
+            setTitle(resources.getString(R.string.exit_app_alert_dialog_title))
+            setMessage(resources.getString(R.string.exit_app_alert_dialog_message))
+            setPositiveButton(resources.getString(R.string.exit_app_alert_dialog_positive_button)) { _,_ ->
+                finishAffinity()
+            }
+            setNegativeButton(resources.getString(R.string.exit_app_alert_dialog_negative_button), null)
+        }.create().show()
+    }
+
 }

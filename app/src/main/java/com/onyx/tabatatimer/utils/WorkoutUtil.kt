@@ -6,6 +6,8 @@ import android.util.Log
 import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.models.WorkoutPhase
+import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
+import com.zeugmasolutions.localehelper.Locales
 
 class WorkoutUtil {
     companion object {
@@ -31,6 +33,7 @@ class WorkoutUtil {
         }
 
         fun getWorkoutDetails(workout: Workout, context: Context): List<WorkoutPhase> {
+            setLocale(context, Locales.Russian)
             var phaseList = mutableListOf<WorkoutPhase>()
             val stepsCount = getWorkoutStepsCount(workout)
             phaseList.add(

@@ -1,17 +1,14 @@
 package com.onyx.tabatatimer
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.onyx.tabatatimer.adapter.WorkoutPhaseAdapter
 import com.onyx.tabatatimer.databinding.ActivityTimerBinding
 import com.onyx.tabatatimer.models.Workout
@@ -21,6 +18,9 @@ import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
 import com.onyx.tabatatimer.utils.WorkoutUtil
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.LocaleHelper
+import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
+import com.zeugmasolutions.localehelper.Locales
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -28,7 +28,7 @@ class TimerActivity : LocaleAwareCompatActivity() {
 
     private var isTimerRunning = false
     private lateinit var binding: ActivityTimerBinding
-    private val args: TimerActivityArgs by navArgs<TimerActivityArgs>()
+    private val args: TimerActivityArgs by navArgs()
     private lateinit var workout: Workout
     private lateinit var timerMap: List<WorkoutPhase>
     private lateinit var workoutPhaseAdapter: WorkoutPhaseAdapter
@@ -37,6 +37,16 @@ class TimerActivity : LocaleAwareCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        /*val sharedPreferencess = getSharedPreferences("com.onyx.tabatatimer_preferences", Context.MODE_PRIVATE)
+        when (sharedPreferencess.getString("language", "en")) {
+            "en" -> {
+                setLocale(applicationContext, Locales.English)
+            }
+            "ru" -> {
+                setLocale(applicationContext, Locales.Russian)
+            }
+        }*/
 
         workout = if (args.workout == null) {
             TimerService.workout
@@ -81,11 +91,12 @@ class TimerActivity : LocaleAwareCompatActivity() {
 
         setObservers()
         if (TimerService.isServiceStopped) {
-            timerMap = WorkoutUtil.getWorkoutDetails(workout, applicationContext)
+            timerMap = getWorkoutDetails(workout)
+            Log.d("TTT11", timerMap.toString())
             sendCommandToService(Constants.ACTION_START_SERVICE)
             TimerService.isTimerRunning = true
         } else {
-            timerMap = TimerService.timerMap
+            timerMap = getWorkoutDetails(workout)
 
         }
         setUpRecyclerView()
@@ -197,5 +208,62 @@ class TimerActivity : LocaleAwareCompatActivity() {
         workoutPhaseAdapter.differ.submitList(timerMap)
     }
 
+    private fun getWorkoutDetails(workout: Workout): List<WorkoutPhase> {
+        var phaseList = mutableListOf<WorkoutPhase>()
+        val stepsCount = WorkoutUtil.getWorkoutStepsCount(workout)
+        phaseList.add(
+            WorkoutPhase(
+                1,
+                workout.color,
+                resources.getString(R.string.prepare_phase_title),
+                workout.prepareDescription.toString()
+            )
+        )
+        var currentStepIndex = 2
+        for (j in 0 until workout.sets) {
+            for (k in 0 until workout.cycles-1) {
+                phaseList.add(
+                    WorkoutPhase(
+                        currentStepIndex++,
+                        workout.color,resources.getString(R.string.work_phase_title),
+                        workout.workDescription.toString()
+                    )
+                )
+                phaseList.add(
+                    WorkoutPhase(
+                        currentStepIndex++,
+                        workout.color,
+                        resources.getString(R.string.rest_phase_title),
+                        workout.restDescription.toString()
+                    )
+                )
+            }
+            phaseList.add(
+                WorkoutPhase(
+                    currentStepIndex++,
+                    workout.color,
+                    resources.getString(R.string.work_phase_title),
+                    workout.workDescription.toString()
+                )
+            )
+            phaseList.add(
+                WorkoutPhase(
+                    currentStepIndex++,
+                    workout.color,
+                    resources.getString(R.string.rest_between_sets_phase_title),
+                    workout.restBetweenSetsDescription.toString()
+                )
+            )
+        }
+        phaseList[stepsCount - 1] =
+            WorkoutPhase(
+                stepsCount,
+                workout.color,
+                resources.getString(R.string.cooldown_phase_title),
+                workout.coolDownDescription.toString()
+            )
+        Log.d("TTT1",phaseList.toString())
+        return phaseList
+    }
 
 }

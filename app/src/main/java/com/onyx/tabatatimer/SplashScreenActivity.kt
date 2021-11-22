@@ -1,15 +1,18 @@
 package com.onyx.tabatatimer
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatDelegate
 import com.onyx.tabatatimer.databinding.ActivitySplashScreenBinding
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.service.TimerService
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
+import com.zeugmasolutions.localehelper.Locales
 
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : LocaleAwareCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding
 
@@ -18,7 +21,28 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        val sharedPreferences = getSharedPreferences("com.onyx.tabatatimer_preferences", Context.MODE_PRIVATE)
+        when (sharedPreferences.getBoolean("dark_theme", false)) {
+            true -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            false -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+        when (sharedPreferences.getString("language", "en")) {
+            "en" -> {
+                setLocale(applicationContext, Locales.English)
+            }
+            "ru" -> {
+                setLocale(applicationContext, Locales.Russian)
+            }
+        }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         Handler().postDelayed({
             val intent: Intent
             if (TimerService.isServiceStopped) {
@@ -29,7 +53,8 @@ class SplashScreenActivity : AppCompatActivity() {
                 intent.putExtra("workout", workout)
             }
             startActivity(intent)
-            finish()
+            finishAffinity()
         }, 1000)
     }
+
 }
