@@ -29,4 +29,11 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/workout_management_header">
+        <Preference app:title="@string/delete_workouts_title"
+            app:key="clear_workouts"
+            app:summary="@string/delete_workouts_summary"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

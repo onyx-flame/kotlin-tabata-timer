@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/backgroundWhite"
+    android:background="@color/appBackground"
     tools:context=".fragments.UpdateWorkoutFragment">
 
     <LinearLayout
@@ -78,7 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        app:cardBackgroundColor="@color/backgroundWhite"
+                        app:cardBackgroundColor="@color/appBackground"
                         android:elevation="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_5sdp"
                         app:strokeColor="@color/black"

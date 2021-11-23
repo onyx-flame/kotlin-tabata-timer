@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.onyx.tabatatimer.databinding.ActivitySplashScreenBinding
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.service.TimerService
+import com.onyx.tabatatimer.utils.Constants.CONTEXT_NAME
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
 import com.zeugmasolutions.localehelper.Locales
@@ -21,7 +22,7 @@ class SplashScreenActivity : LocaleAwareCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val sharedPreferences = getSharedPreferences("com.onyx.tabatatimer_preferences", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(CONTEXT_NAME, Context.MODE_PRIVATE)
         when (sharedPreferences.getBoolean("dark_theme", false)) {
             true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

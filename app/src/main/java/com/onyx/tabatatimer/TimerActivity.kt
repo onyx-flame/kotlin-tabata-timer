@@ -3,10 +3,10 @@ package com.onyx.tabatatimer
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.onyx.tabatatimer.adapter.WorkoutPhaseAdapter
@@ -15,38 +15,31 @@ import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.models.WorkoutPhase
 import com.onyx.tabatatimer.service.TimerService
 import com.onyx.tabatatimer.utils.Constants
+import com.onyx.tabatatimer.utils.Constants.CONTEXT_NAME
 import com.onyx.tabatatimer.utils.TimerEvent
 import com.onyx.tabatatimer.utils.WorkoutUtil
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
-import com.zeugmasolutions.localehelper.LocaleHelper
 import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
 import com.zeugmasolutions.localehelper.Locales
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 import java.util.*
 import kotlin.math.roundToInt
 
 class TimerActivity : LocaleAwareCompatActivity() {
 
-    private var isTimerRunning = false
+    private var isWorkoutRunning = false
+    private var isWorkoutCompleted = false
     private lateinit var binding: ActivityTimerBinding
     private val args: TimerActivityArgs by navArgs()
     private lateinit var workout: Workout
-    private lateinit var timerMap: List<WorkoutPhase>
+    private lateinit var timerPhaseList: List<WorkoutPhase>
     private lateinit var workoutPhaseAdapter: WorkoutPhaseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        /*val sharedPreferencess = getSharedPreferences("com.onyx.tabatatimer_preferences", Context.MODE_PRIVATE)
-        when (sharedPreferencess.getString("language", "en")) {
-            "en" -> {
-                setLocale(applicationContext, Locales.English)
-            }
-            "ru" -> {
-                setLocale(applicationContext, Locales.Russian)
-            }
-        }*/
 
         workout = if (args.workout == null) {
             TimerService.workout
@@ -58,16 +51,15 @@ class TimerActivity : LocaleAwareCompatActivity() {
             clRoot.setBackgroundColor(workout.color)
             val elementsColor = WorkoutUtil.getContrastYIQ(workout.color)
             ivExit.setColorFilter(elementsColor)
-            tvPhase.setTextColor(elementsColor)
+            tvCurrentPhaseTitle.setTextColor(elementsColor)
             ivPlay.setColorFilter(elementsColor)
             ivPause.setColorFilter(elementsColor)
             tvTimer.setTextColor(elementsColor)
             ivPrevious.setColorFilter(elementsColor)
-            tvStage.setTextColor(elementsColor)
+            tvPhase.setTextColor(elementsColor)
             ivNext.setColorFilter(elementsColor)
             cpi.setIndicatorColor(elementsColor)
             cpi.setBackgroundColor(workout.color)
-            tvPhase.text = workout.title
             ivPlay.setOnClickListener {
                 if (!TimerService.isServiceStopped) {
                     togglePlayPause()
@@ -90,14 +82,24 @@ class TimerActivity : LocaleAwareCompatActivity() {
         }
 
         setObservers()
-        if (TimerService.isServiceStopped) {
-            timerMap = getWorkoutDetails(workout)
-            Log.d("TTT11", timerMap.toString())
+        if (savedInstanceState != null) {
+            isWorkoutCompleted = savedInstanceState.getBoolean("isWorkoutCompleted")
+            val sharedPreferences = getSharedPreferences(CONTEXT_NAME, Context.MODE_PRIVATE)
+            when (sharedPreferences.getString("language", "en")) {
+                "en" -> {
+                    setLocale(applicationContext, Locales.English)
+                }
+                "ru" -> {
+                    setLocale(applicationContext, Locales.Russian)
+                }
+            }
+        }
+        if (TimerService.isServiceStopped and !isWorkoutCompleted) {
+            timerPhaseList = getWorkoutDetails(workout)
             sendCommandToService(Constants.ACTION_START_SERVICE)
             TimerService.isTimerRunning = true
         } else {
-            timerMap = getWorkoutDetails(workout)
-
+            timerPhaseList = getWorkoutDetails(workout)
         }
         setUpRecyclerView()
         if (!TimerService.isTimerRunning) {
@@ -124,42 +126,80 @@ class TimerActivity : LocaleAwareCompatActivity() {
     }
 
     private fun setObservers() {
-        TimerService.timerEvent.observe(this, Observer {
+        TimerService.timerEvent.observe(this, {
             when (it) {
                 is TimerEvent.START -> {
-                    isTimerRunning = true
-                    //binding.ivStartPause.setImageResource(R.drawable.ic_pause)
-                    Unit
+                    isWorkoutRunning = true
                 }
                 is TimerEvent.END -> {
-                    isTimerRunning = false
-                    //binding.ivStartPause.setImageResource(R.drawable.ic_play)
-                    Unit
+                    if (TimerService.isServiceStopped && !TimerService.isTimerRunning) {
+                        if (!isWorkoutCompleted) {
+                            isWorkoutCompleted = TimerService.currentPhaseNumber.value!! >= timerPhaseList.size
+                            if (isWorkoutCompleted) {
+                                val finishPlayer = MediaPlayer.create(applicationContext, R.raw.finish_sound)
+                                finishPlayer.setOnCompletionListener { mp ->
+                                    mp.release()
+                                }
+                                finishPlayer.start()
+                            }
+                        }
+                        isWorkoutRunning = false
+                        binding.tvCurrentPhaseTitle.text = resources.getString(R.string.finish_phase_title)
+                        binding.viewKonfetti.build()
+                            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                            .setDirection(0.0, 359.0)
+                            .setSpeed(1f, 5f)
+                            .setFadeOutEnabled(true)
+                            .setTimeToLive(2000L)
+                            .addShapes(Shape.Square, Shape.Circle)
+                            .addSizes(Size(12))
+                            .setPosition(-50f, binding.viewKonfetti.width + 50f, -50f, -50f)
+                            .streamFor(300, 5000L)
+                    }
                 }
             }
         })
 
-        TimerService.timerInMillis.observe(this, Observer {
+        TimerService.timerInMillis.observe(this, {
             val currentMillis = (it/1000f).roundToInt()
-            Log.d("TTT", "CURRENT: $currentMillis")
             binding.apply {
                 tvTimer.text = currentMillis.toString()
                 cpi.progress = currentMillis
             }
         })
-        TimerService.currentPhaseTitle.observe(this, Observer {
-            binding.tvPhase.text = it
+        TimerService.currentPhaseTitle.observe(this, {
+            if (isWorkoutCompleted) {
+                binding.tvCurrentPhaseTitle.text = resources.getString(R.string.finish_phase_title)
+            } else {
+                binding.tvCurrentPhaseTitle.text =
+                    when (it) {
+                        "Prepare" -> resources.getString(R.string.prepare_phase_title)
+                        "Work" -> resources.getString(R.string.work_phase_title)
+                        "Rest" -> resources.getString(R.string.rest_phase_title)
+                        "Sets Rest" -> resources.getString(R.string.rest_between_sets_phase_title)
+                        "Cool Down" -> resources.getString(R.string.cooldown_phase_title)
+                        else -> ""
+                    }
+            }
         })
-        TimerService.currentPhaseTime.observe(this, Observer {
-            Log.d("TTT", "MAX: ${binding.cpi.max}")
+        TimerService.currentPhaseTime.observe(this, {
             binding.cpi.max = it
         })
-        TimerService.currentStageNumber.observe(this, Observer {
+        TimerService.currentPhaseNumber.observe(this, {
             if (it != -1) {
-                binding.tvStage.text = "$it/${WorkoutUtil.getWorkoutStepsCount(workout)}"
+                binding.tvPhase.text = resources.getString(
+                    R.string.current_phase_to_all_phase_count_template,
+                    it,
+                    WorkoutUtil.getWorkoutStepsCount(workout)
+                )
                 binding.recyclerView.smoothScrollToPosition(it - 1)
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("isWorkoutCompleted", isWorkoutCompleted)
     }
 
     private fun sendCommandToService(action: String) {
@@ -175,7 +215,6 @@ class TimerActivity : LocaleAwareCompatActivity() {
 
     override fun onBackPressed() {
         exitWorkout()
-        //super.onBackPressed()
     }
 
     private fun exitWorkout() {
@@ -185,7 +224,7 @@ class TimerActivity : LocaleAwareCompatActivity() {
             setPositiveButton(resources.getString(R.string.exit_workout_alert_dialog_positive_button)) { _,_ ->
                 val intent = Intent(this@TimerActivity,MainActivity::class.java)
                 startActivity(intent)
-                finish()
+                finishAffinity()
                 if (!TimerService.isServiceStopped) {
                     sendCommandToService(Constants.ACTION_STOP_SERVICE)
                 }
@@ -205,11 +244,11 @@ class TimerActivity : LocaleAwareCompatActivity() {
             setHasFixedSize(true)
             adapter = workoutPhaseAdapter
         }
-        workoutPhaseAdapter.differ.submitList(timerMap)
+        workoutPhaseAdapter.differ.submitList(timerPhaseList)
     }
 
     private fun getWorkoutDetails(workout: Workout): List<WorkoutPhase> {
-        var phaseList = mutableListOf<WorkoutPhase>()
+        val phaseList = mutableListOf<WorkoutPhase>()
         val stepsCount = WorkoutUtil.getWorkoutStepsCount(workout)
         phaseList.add(
             WorkoutPhase(
@@ -262,7 +301,6 @@ class TimerActivity : LocaleAwareCompatActivity() {
                 resources.getString(R.string.cooldown_phase_title),
                 workout.coolDownDescription.toString()
             )
-        Log.d("TTT1",phaseList.toString())
         return phaseList
     }
 

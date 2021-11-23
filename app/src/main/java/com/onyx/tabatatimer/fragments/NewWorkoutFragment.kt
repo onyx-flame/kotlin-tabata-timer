@@ -11,6 +11,7 @@ import com.onyx.tabatatimer.MainActivity
 import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.databinding.FragmentNewWorkoutBinding
 import com.onyx.tabatatimer.models.Workout
+import com.onyx.tabatatimer.utils.DigitsInputFilter
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
 
 class NewWorkoutFragment : Fragment() {
@@ -48,14 +49,24 @@ class NewWorkoutFragment : Fragment() {
         workoutViewModel = (activity as MainActivity).workoutViewModel
         mView = view
 
+        val timeInputFilter = arrayOf(DigitsInputFilter(1,999))
+        val countInputFilter = arrayOf(DigitsInputFilter(1,99))
+
         binding.apply {
             etPrepareTime.transformationMethod = null
+            etPrepareTime.filters = timeInputFilter
             etWorkTime.transformationMethod = null
+            etWorkTime.filters = timeInputFilter
             etRestTime.transformationMethod = null
+            etRestTime.filters = timeInputFilter
             etRestBetweenSetsTime.transformationMethod = null
+            etRestBetweenSetsTime.filters = timeInputFilter
             etCoolDownTime.transformationMethod = null
+            etCoolDownTime.filters = timeInputFilter
             etCyclesCount.transformationMethod = null
+            etCyclesCount.filters = countInputFilter
             etSetsCount.transformationMethod = null
+            etSetsCount.filters = countInputFilter
         }
         binding.cvColor.setOnClickListener {
             ColorPickerDialog
@@ -108,8 +119,6 @@ class NewWorkoutFragment : Fragment() {
         view.findNavController().navigate(R.id.action_newWorkoutFragment_to_homeFragment)
 
     }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {

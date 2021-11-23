@@ -18,7 +18,7 @@
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/tvPhase"
+        android:id="@+id/tvCurrentPhaseTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Tabata"
@@ -41,7 +41,7 @@
         app:indicatorSize="@dimen/_150sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPhase" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCurrentPhaseTitle" />
 
     <TextView
         android:id="@+id/tvTimer"
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_20sdp"
-        app:layout_constraintBottom_toTopOf="@+id/tvStage"
+        app:layout_constraintBottom_toTopOf="@+id/tvPhase"
         app:layout_constraintTop_toBottomOf="@+id/cpi"
         tools:layout_editor_absoluteX="6dp" />
 
@@ -97,7 +97,7 @@
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/tvStage"
+        android:id="@+id/tvPhase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="0/70"
@@ -117,10 +117,9 @@
         android:layout_margin="@dimen/_5sdp"
         app:tint="@color/black" />
 
-    <TextView
-        android:id="@+id/shit"
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cpi" />
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

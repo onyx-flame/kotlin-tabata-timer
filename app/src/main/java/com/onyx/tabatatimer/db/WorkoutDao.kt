@@ -19,4 +19,10 @@ interface WorkoutDao {
     @Query("SELECT * FROM workouts ORDER BY id")
     fun getWorkouts(): LiveData<List<Workout>>
 
+    @Query("SELECT * FROM workouts WHERE instr(lower(title), lower(:query)) > 0 ORDER BY id")
+    fun searchWorkouts(query: String): LiveData<List<Workout>>
+
+    @Query("DELETE FROM workouts")
+    suspend fun deleteAllWorkouts()
+
 }

@@ -1,8 +1,8 @@
 package com.onyx.tabatatimer.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -13,7 +13,7 @@ import com.onyx.tabatatimer.databinding.FragmentHomeBinding
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -59,6 +59,7 @@ class HomeFragment : Fragment() {
         binding.fabAddWorkout.setOnClickListener { mView ->
             mView.findNavController().navigate(R.id.action_homeFragment_to_newWorkoutFragment)
         }
+        binding.searchView.setOnQueryTextListener(this)
     }
 
     private fun setUpRecyclerView() {
@@ -110,6 +111,28 @@ class HomeFragment : Fragment() {
         super.onResume()
         (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
+    }
+
+    override fun onQueryTextSubmit(query: String): Boolean {
+        searchWorkouts(query.trim())
+        return true
+    }
+
+    override fun onQueryTextChange(query: String): Boolean {
+        searchWorkouts(query.trim())
+        return true
+    }
+
+    private fun searchWorkouts(query: String) {
+        workoutViewModel.searchWorkouts(query).observe(viewLifecycleOwner, { workouts ->
+            workoutAdapter.differ.submitList(workouts)
+            binding.apply {
+                progressBar.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+                mcvNoWorkouts.visibility = View.GONE
+            }
+            updateUI(workouts)
+        })
     }
 
 }

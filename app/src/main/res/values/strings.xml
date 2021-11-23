@@ -5,6 +5,14 @@
     <string name="update_workout_menu_toolbar_title">Edit Workout</string>
     <string name="new_workout_menu_toolbar_title">New Workout</string>
     <string name="settings_menu_toolbar_title">Settings</string>
+    <string name="appearance_header">Appearance</string>
+    <string name="language_header">Language</string>
+    <string name="workout_management_header">Workout Management</string>
+    <string name="dark_theme_title">Use dark theme</string>
+    <string name="font_size_title">Font size</string>
+    <string name="language_title">Language</string>
+    <string name="delete_workouts_title">Clear data</string>
+    <string name="delete_workouts_summary">Be careful, this will delete all saved workouts</string>
     <string name="search_view_hint">Search Workouts</string>
     <string name="no_workouts_text">No Workouts!</string>
     <string name="workout_layout_adapter_info_template">%1$d intervals | %2$s</string>
@@ -47,14 +55,21 @@
     <string name="exit_app_alert_dialog_message">Do you want to exit the app?</string>
     <string name="exit_app_alert_dialog_positive_button">Exit</string>
     <string name="exit_app_alert_dialog_negative_button">Cancel</string>
+    <string name="finish_phase_title">Finish!</string>
+    <string name="delete_workouts_alert_dialog_title">Clear data</string>
+    <string name="delete_workouts_alert_dialog_message">Do you want to delete all workouts?</string>
+    <string name="delete_workouts_alert_dialog_positive_button">Delete</string>
+    <string name="delete_workouts_alert_dialog_negative_button">Cancel</string>
+    <string name="delete_workouts_success_message">Data cleared successfully!</string>
+    <string name="title_default_value">New Workout</string>
+    <string name="prepare_time_default_value" translatable="false">10</string>
+    <string name="work_time_default_value" translatable="false">20</string>
+    <string name="rest_time_default_value" translatable="false">10</string>
+    <string name="cycles_count_default_value" translatable="false">8</string>
+    <string name="sets_count_default_value" translatable="false">1</string>
+    <string name="rest_between_sets_time_default_value" translatable="false">10</string>
+    <string name="cooldown_time_default_value" translatable="false">10</string>
+    <string name="splash_screen_title">Tabata</string>
+    <string name="current_phase_to_all_phase_count_template" translatable="false">%1$d/%2$d</string>
 
-
-
-
-
-    <string name="appearance_header">Appearance</string>
-    <string name="language_header">Language</string>
-    <string name="dark_theme_title">Use dark theme</string>
-    <string name="font_size_title">Font size</string>
-    <string name="language_title">Language</string>
 </resources>

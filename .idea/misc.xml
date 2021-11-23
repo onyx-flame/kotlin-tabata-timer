@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/drawable/background.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/drawable/ic_exit.xml" value="0.2703125" />
+        <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/drawable/ic_search.xml" value="0.2703125" />
+        <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/layout-land/activity_timer.xml" value="0.2" />
         <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/layout/activity_main.xml" value="0.14492753623188406" />
         <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/layout/activity_splash_screen.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/onyx/AndroidStudioProjects/TabataTimer/app/src/main/res/layout/activity_timer.xml" value="0.2" />

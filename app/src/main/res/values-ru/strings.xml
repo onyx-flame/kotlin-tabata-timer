@@ -2,15 +2,18 @@
 <resources>
     <string name="app_name">Табата Таймер</string>
 
-    <string name="appearance_header">Внешний вид</string>
-    <string name="language_header">Язык</string>
-    <string name="dark_theme_title">Использовать темную тему</string>
-    <string name="font_size_title">Размер шрифта</string>
-    <string name="language_title">Язык</string>
     <string name="home_menu_toolbar_title">Табата Таймер</string>
     <string name="update_workout_menu_toolbar_title">Изменить тренировку</string>
     <string name="new_workout_menu_toolbar_title">Новая тренировка</string>
     <string name="settings_menu_toolbar_title">Настройки</string>
+    <string name="appearance_header">Внешний вид</string>
+    <string name="language_header">Язык</string>
+    <string name="workout_management_header">Управление тренировками</string>
+    <string name="dark_theme_title">Использовать темную тему</string>
+    <string name="font_size_title">Размер шрифта</string>
+    <string name="language_title">Язык</string>
+    <string name="delete_workouts_title">Очистить данные</string>
+    <string name="delete_workouts_summary">Осторожно, это удалит все сохраненные тренировки</string>
     <string name="search_view_hint">Поиск тренировок</string>
     <string name="no_workouts_text">Нет тренировок!</string>
     <string name="workout_layout_adapter_info_template">%1$d интервалов | %2$s</string>
@@ -53,5 +56,13 @@
     <string name="exit_app_alert_dialog_message">Покинуть приложение?</string>
     <string name="exit_app_alert_dialog_positive_button">Выйти</string>
     <string name="exit_app_alert_dialog_negative_button">Отмена</string>
+    <string name="finish_phase_title">Финиш!</string>
+    <string name="delete_workouts_alert_dialog_title">Очистить данные</string>
+    <string name="delete_workouts_alert_dialog_message">Вы точно хотите удалить все тренировки?</string>
+    <string name="delete_workouts_alert_dialog_positive_button">Удалить</string>
+    <string name="delete_workouts_alert_dialog_negative_button">Отмена</string>
+    <string name="delete_workouts_success_message">Данные успешно очищены!</string>
+    <string name="title_default_value">Новая тренировка</string>
+    <string name="splash_screen_title">Табата</string>
 
 </resources>

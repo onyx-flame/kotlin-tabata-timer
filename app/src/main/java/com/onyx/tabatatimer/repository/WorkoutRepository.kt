@@ -9,5 +9,7 @@ class WorkoutRepository(private val db: WorkoutDatabase) {
     suspend fun updateWorkout(workout: Workout) = db.getWorkoutDao().updateWorkout(workout)
     suspend fun deleteWorkout(workout: Workout) = db.getWorkoutDao().deleteWorkout(workout)
     fun getWorkouts() = db.getWorkoutDao().getWorkouts()
+    fun searchWorkouts(query: String) = db.getWorkoutDao().searchWorkouts(query)
+    suspend fun deleteAllWorkouts() = db.getWorkoutDao().deleteAllWorkouts()
 
 }

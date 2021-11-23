@@ -26,4 +26,10 @@ class WorkoutViewModel(
 
     fun getWorkouts() = workoutRepository.getWorkouts()
 
+    fun searchWorkouts(query: String) = workoutRepository.searchWorkouts(query)
+
+    fun deleteAllWorkouts() = viewModelScope.launch {
+        workoutRepository.deleteAllWorkouts()
+    }
+
 }

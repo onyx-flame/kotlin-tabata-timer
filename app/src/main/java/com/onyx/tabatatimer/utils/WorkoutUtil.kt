@@ -2,7 +2,6 @@ package com.onyx.tabatatimer.utils
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import com.onyx.tabatatimer.R
 import com.onyx.tabatatimer.models.Workout
 import com.onyx.tabatatimer.models.WorkoutPhase
@@ -34,7 +33,7 @@ class WorkoutUtil {
 
         fun getWorkoutDetails(workout: Workout, context: Context): List<WorkoutPhase> {
             setLocale(context, Locales.Russian)
-            var phaseList = mutableListOf<WorkoutPhase>()
+            val phaseList = mutableListOf<WorkoutPhase>()
             val stepsCount = getWorkoutStepsCount(workout)
             phaseList.add(
                 WorkoutPhase(
@@ -87,7 +86,6 @@ class WorkoutUtil {
                     context.resources.getString(R.string.cooldown_phase_title),
                     workout.coolDownDescription.toString()
                 )
-            Log.d("TTT",phaseList.toString())
             return phaseList
         }
 

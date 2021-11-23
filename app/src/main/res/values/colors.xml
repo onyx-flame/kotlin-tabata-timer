@@ -11,7 +11,7 @@
     <color name="colorPrimary">#9432c0</color>
     <color name="colorPrimaryVariant">#6b278a</color>
     <color name="cardBackground">@color/white</color>
-    <color name="backgroundWhite">#d1cbcb</color>
+    <color name="appBackground">#d1cbcb</color>
     <color name="queryHintColor">#928e8e</color>
     <color name="hintColor">#928e8e</color>
     <color name="textColor">@color/black</color>
