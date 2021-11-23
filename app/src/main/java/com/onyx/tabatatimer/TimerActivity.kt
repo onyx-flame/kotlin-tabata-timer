@@ -99,7 +99,7 @@ class TimerActivity : LocaleAwareCompatActivity() {
             sendCommandToService(Constants.ACTION_START_SERVICE)
             TimerService.isTimerRunning = true
         } else {
-            timerPhaseList = getWorkoutDetails(workout)
+            timerPhaseList = TimerService.timerPhaseList
         }
         setUpRecyclerView()
         if (!TimerService.isTimerRunning) {
@@ -145,6 +145,11 @@ class TimerActivity : LocaleAwareCompatActivity() {
                         }
                         isWorkoutRunning = false
                         binding.tvCurrentPhaseTitle.text = resources.getString(R.string.finish_phase_title)
+                        binding.tvPhase.text = resources.getString(
+                            R.string.current_phase_to_all_phase_count_template,
+                            timerPhaseList.size,
+                            timerPhaseList.size
+                        )
                         binding.viewKonfetti.build()
                             .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
                             .setDirection(0.0, 359.0)
@@ -167,21 +172,6 @@ class TimerActivity : LocaleAwareCompatActivity() {
                 cpi.progress = currentMillis
             }
         })
-        TimerService.currentPhaseTitle.observe(this, {
-            if (isWorkoutCompleted) {
-                binding.tvCurrentPhaseTitle.text = resources.getString(R.string.finish_phase_title)
-            } else {
-                binding.tvCurrentPhaseTitle.text =
-                    when (it) {
-                        "Prepare" -> resources.getString(R.string.prepare_phase_title)
-                        "Work" -> resources.getString(R.string.work_phase_title)
-                        "Rest" -> resources.getString(R.string.rest_phase_title)
-                        "Sets Rest" -> resources.getString(R.string.rest_between_sets_phase_title)
-                        "Cool Down" -> resources.getString(R.string.cooldown_phase_title)
-                        else -> ""
-                    }
-            }
-        })
         TimerService.currentPhaseTime.observe(this, {
             binding.cpi.max = it
         })
@@ -193,6 +183,7 @@ class TimerActivity : LocaleAwareCompatActivity() {
                     WorkoutUtil.getWorkoutStepsCount(workout)
                 )
                 binding.recyclerView.smoothScrollToPosition(it - 1)
+                binding.tvCurrentPhaseTitle.text = timerPhaseList[it - 1].phaseTitle
             }
         })
     }
@@ -208,6 +199,7 @@ class TimerActivity : LocaleAwareCompatActivity() {
                 this.action = action
                 if (action == Constants.ACTION_START_SERVICE) {
                     this.putExtra("workout", workout)
+                    this.putParcelableArrayListExtra("timerPhaseList", timerPhaseList as ArrayList<WorkoutPhase>)
                 }
             }
         )
@@ -255,7 +247,8 @@ class TimerActivity : LocaleAwareCompatActivity() {
                 1,
                 workout.color,
                 resources.getString(R.string.prepare_phase_title),
-                workout.prepareDescription.toString()
+                workout.prepareDescription.toString(),
+                workout.prepareTime
             )
         )
         var currentStepIndex = 2
@@ -265,7 +258,8 @@ class TimerActivity : LocaleAwareCompatActivity() {
                     WorkoutPhase(
                         currentStepIndex++,
                         workout.color,resources.getString(R.string.work_phase_title),
-                        workout.workDescription.toString()
+                        workout.workDescription.toString(),
+                        workout.workTime
                     )
                 )
                 phaseList.add(
@@ -273,7 +267,8 @@ class TimerActivity : LocaleAwareCompatActivity() {
                         currentStepIndex++,
                         workout.color,
                         resources.getString(R.string.rest_phase_title),
-                        workout.restDescription.toString()
+                        workout.restDescription.toString(),
+                        workout.restTime
                     )
                 )
             }
@@ -282,7 +277,8 @@ class TimerActivity : LocaleAwareCompatActivity() {
                     currentStepIndex++,
                     workout.color,
                     resources.getString(R.string.work_phase_title),
-                    workout.workDescription.toString()
+                    workout.workDescription.toString(),
+                    workout.workTime
                 )
             )
             phaseList.add(
@@ -290,7 +286,8 @@ class TimerActivity : LocaleAwareCompatActivity() {
                     currentStepIndex++,
                     workout.color,
                     resources.getString(R.string.rest_between_sets_phase_title),
-                    workout.restBetweenSetsDescription.toString()
+                    workout.restBetweenSetsDescription.toString(),
+                    workout.restBetweenSetsTime
                 )
             )
         }
@@ -299,7 +296,8 @@ class TimerActivity : LocaleAwareCompatActivity() {
                 stepsCount,
                 workout.color,
                 resources.getString(R.string.cooldown_phase_title),
-                workout.coolDownDescription.toString()
+                workout.coolDownDescription.toString(),
+                workout.coolDownTime
             )
         return phaseList
     }

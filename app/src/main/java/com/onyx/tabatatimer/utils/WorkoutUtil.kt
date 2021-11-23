@@ -31,64 +31,6 @@ class WorkoutUtil {
             return time
         }
 
-        fun getWorkoutDetails(workout: Workout, context: Context): List<WorkoutPhase> {
-            setLocale(context, Locales.Russian)
-            val phaseList = mutableListOf<WorkoutPhase>()
-            val stepsCount = getWorkoutStepsCount(workout)
-            phaseList.add(
-                WorkoutPhase(
-                    1,
-                    workout.color,
-                    context.resources.getString(R.string.prepare_phase_title),
-                    workout.prepareDescription.toString()
-                )
-            )
-            var currentStepIndex = 2
-            for (j in 0 until workout.sets) {
-                for (k in 0 until workout.cycles-1) {
-                    phaseList.add(
-                        WorkoutPhase(
-                            currentStepIndex++,
-                            workout.color,context.resources.getString(R.string.work_phase_title),
-                            workout.workDescription.toString()
-                        )
-                    )
-                    phaseList.add(
-                        WorkoutPhase(
-                            currentStepIndex++,
-                            workout.color,
-                            context.resources.getString(R.string.rest_phase_title),
-                            workout.restDescription.toString()
-                        )
-                    )
-                }
-                phaseList.add(
-                    WorkoutPhase(
-                        currentStepIndex++,
-                        workout.color,
-                        context.resources.getString(R.string.work_phase_title),
-                        workout.workDescription.toString()
-                    )
-                )
-                phaseList.add(
-                    WorkoutPhase(
-                        currentStepIndex++,
-                        workout.color,
-                        context.resources.getString(R.string.rest_between_sets_phase_title),
-                        workout.restBetweenSetsDescription.toString()
-                    )
-                )
-            }
-            phaseList[stepsCount - 1] =
-                WorkoutPhase(
-                    stepsCount,
-                    workout.color,
-                    context.resources.getString(R.string.cooldown_phase_title),
-                    workout.coolDownDescription.toString()
-                )
-            return phaseList
-        }
-
         fun getContrastYIQ(color: Int): Int {
             val yiq = (Color.red(color) * 299 + Color.green(color) * 587 + Color.blue(color) * 114) / 1000
             return if (yiq >= 128) {

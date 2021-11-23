@@ -18,7 +18,7 @@
     <string name="workout_layout_adapter_info_template">%1$d intervals | %2$s</string>
     <string name="workout_layout_adapter_details_template">Prepare: %1$d sec\nWork: %2$d sec\nRest: %3$d sec\nCycles: %4$d\nSets: %5$d\nSets Rest: %6$d sec\nCool Down: %7$d sec\n</string>
     <string name="edit_workout_title">Title:</string>
-    <string name="edit_workout_color">Color:</string>
+    <string name="edit_workout_color">Choose color:</string>
     <string name="edit_workout_prepare">Prepare:</string>
     <string name="edit_workout_prepare_time">Prepare Time</string>
     <string name="edit_workout_work">Work:</string>

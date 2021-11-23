@@ -18,7 +18,7 @@ import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
 import com.zeugmasolutions.localehelper.Locales
 
-class MainActivity : LocaleAwareCompatActivity() {
+class MainActivity : LocaleAwareCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
@@ -45,30 +45,13 @@ class MainActivity : LocaleAwareCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener { _, key ->
-            when (key) {
-                "dark_theme" -> {
-                    updateAppTheme()
-                }
-                "font_size" -> {
-                    updateAppFontSize()
-                    try {
-                        findNavController(R.id.navigation_header_container).navigate(R.id.action_settingsFragment_to_settingsFragment)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        try {
-                            findNavController(R.id.navigation_header_container).navigate(R.id.action_settingsFragment_to_settingsFragment)
-                        } catch (e: Exception) {}
-                    }
-                    updateAppLanguage()
-
-                }
-                "language" -> {
-                    updateAppLanguage()
-                }
-            }
-        }
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         updateAppFontSize()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     private fun updateAppFontSize() {
@@ -99,9 +82,11 @@ class MainActivity : LocaleAwareCompatActivity() {
         when (sharedPreferences.getString("language", "en")) {
             "en" -> {
                 updateLocale(Locales.English)
+                setLocale(applicationContext, Locales.English)
             }
             "ru" -> {
                 updateLocale(Locales.Russian)
+                setLocale(applicationContext, Locales.Russian)
             }
         }
     }
@@ -134,6 +119,32 @@ class MainActivity : LocaleAwareCompatActivity() {
             }
             setNegativeButton(resources.getString(R.string.exit_app_alert_dialog_negative_button), null)
         }.create().show()
+    }
+
+    override fun onSharedPreferenceChanged(p0: SharedPreferences?, key: String?) {
+        when (key) {
+            "dark_theme" -> {
+                updateAppTheme()
+            }
+            "font_size" -> {
+                updateAppFontSize()
+                try {
+                    findNavController(R.id.navigation_header_container).navigate(R.id.action_settingsFragment_to_settingsFragment)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    try {
+                        findNavController(R.id.navigation_header_container).navigate(R.id.action_settingsFragment_to_settingsFragment)
+                    } catch (e: Exception) {}
+                }
+                updateAppLanguage()
+                updateAppTheme()
+
+            }
+            "language" -> {
+                updateAppLanguage()
+                updateAppTheme()
+            }
+        }
     }
 
 }

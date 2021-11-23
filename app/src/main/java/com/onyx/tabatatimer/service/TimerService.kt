@@ -7,6 +7,8 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.CountDownTimer
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -19,9 +21,12 @@ import com.onyx.tabatatimer.models.WorkoutPhase
 import com.onyx.tabatatimer.utils.Constants
 import com.onyx.tabatatimer.utils.TimerEvent
 import com.onyx.tabatatimer.utils.WorkoutUtil
+import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
+import com.zeugmasolutions.localehelper.Locales
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 import kotlin.math.roundToInt
 
 class TimerService: LifecycleService() {
@@ -55,7 +60,7 @@ class TimerService: LifecycleService() {
             when(it.action) {
                 Constants.ACTION_START_SERVICE -> {
                     workout = it.extras?.getParcelable("workout")!!
-                    timerPhaseList = WorkoutUtil.getWorkoutDetails(workout, applicationContext)
+                    timerPhaseList = it.extras?.getParcelableArrayList("timerPhaseList")!!
                     startForegroundService()
                 }
                 Constants.ACTION_STOP_SERVICE -> {
@@ -140,6 +145,13 @@ class TimerService: LifecycleService() {
 
     private fun stopService() {
         try {
+            if (!isServiceStopped && currentPhaseNumber.value!! >= timerPhaseList.size) {
+                Toast.makeText(applicationContext, resources.getString(
+                    R.string.current_phase_to_all_phase_count_template,
+                    timerPhaseList.size,
+                    timerPhaseList.size
+                ), Toast.LENGTH_SHORT).show()
+            }
             isServiceStopped = true
             isTimerRunning = false
             resetValues()
@@ -204,7 +216,7 @@ class TimerService: LifecycleService() {
         return NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_ID)
             .setAutoCancel(false)
             .setOngoing(true)
-            .setSmallIcon(R.drawable.ic_alarm)
+            .setSmallIcon(R.drawable.ic_timer)
             .setContentIntent(getMainActivityPendingIntent())
     }
 
@@ -219,14 +231,7 @@ class TimerService: LifecycleService() {
         )
 
     private fun getPhaseTime(currentNumber: Int): Int {
-        return when (timerPhaseList[currentNumber - 1].phaseTitle) {
-            resources.getString(R.string.prepare_phase_title) -> workout.prepareTime
-            resources.getString(R.string.work_phase_title) -> workout.workTime
-            resources.getString(R.string.rest_phase_title) -> workout.restTime
-            resources.getString(R.string.rest_between_sets_phase_title) -> workout.restBetweenSetsTime
-            resources.getString(R.string.cooldown_phase_title) -> workout.coolDownTime
-            else -> 0
-        }
+        return timerPhaseList[currentNumber - 1].phaseTime
     }
 
     private fun updateWorkoutPhaseInfo(phaseShift: Int = 0) {

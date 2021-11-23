@@ -1,6 +1,8 @@
 package com.onyx.tabatatimer.fragments
 
 import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,11 +12,15 @@ import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.snackbar.Snackbar
 import com.onyx.tabatatimer.MainActivity
 import com.onyx.tabatatimer.R
+import com.onyx.tabatatimer.utils.Constants.CONTEXT_NAME
 import com.onyx.tabatatimer.viewmodels.WorkoutViewModel
+import com.zeugmasolutions.localehelper.LocaleHelper.setLocale
+import com.zeugmasolutions.localehelper.Locales
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private lateinit var workoutViewModel: WorkoutViewModel
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -27,7 +33,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         workoutViewModel = (activity as MainActivity).workoutViewModel
-
+        sharedPreferences = requireActivity().getSharedPreferences(CONTEXT_NAME, Context.MODE_PRIVATE)
+        when (sharedPreferences.getString("language", "en")) {
+            "en" -> {
+                setLocale(requireContext(), Locales.English)
+            }
+            "ru" -> {
+                setLocale(requireContext(), Locales.Russian)
+            }
+        }
         val clearWorkouts: Preference = findPreference("clear_workouts")!!
         clearWorkouts.setOnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).apply {

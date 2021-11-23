@@ -19,7 +19,7 @@
     <string name="workout_layout_adapter_info_template">%1$d интервалов | %2$s</string>
     <string name="workout_layout_adapter_details_template">"Подготовка: %1$d сек\nРабота: %2$d сек\nОтдых: %3$d сек\nЦиклы: %4$d\nСеты: %5$d\nОтдых между сетами: %6$d сек\nЗаминка: %7$d сек\n"</string>
     <string name="edit_workout_title">Название:</string>
-    <string name="edit_workout_color">Цвет:</string>
+    <string name="edit_workout_color">Выберите цвет:</string>
     <string name="edit_workout_prepare">Подготовка:</string>
     <string name="edit_workout_prepare_time">Время подготовки</string>
     <string name="edit_workout_work">Работа:</string>

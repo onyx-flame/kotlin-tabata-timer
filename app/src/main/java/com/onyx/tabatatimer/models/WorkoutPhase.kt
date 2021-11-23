@@ -10,5 +10,6 @@ data class WorkoutPhase(
     val number: Int,
     val color: Int,
     val phaseTitle: String,
-    val phaseDescription: String
+    val phaseDescription: String,
+    val phaseTime: Int
 ): Parcelable
