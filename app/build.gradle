@@ -7,6 +7,9 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+def gitCommitsCount = Integer.parseInt('git rev-list --count HEAD'.execute().text.trim())
+def versionNumber = 'git describe --long'.execute().text.trim().replaceAll('-', '.').find('(\\d+\\.){2}\\d+')
+
 android {
     compileSdk 31
 
@@ -22,10 +25,10 @@ android {
 
     defaultConfig {
         applicationId "com.onyx.tabatatimer"
-        minSdk 21
+        minSdk 24
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode gitCommitsCount
+        versionName versionNumber
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
